@@ -30,8 +30,8 @@ urlpatterns = [
     #url de categoria producto
     path('item/', ObjetoListado.as_view(model = models.Items,
                                                  template_name="item/index.html",
-                                                 extra_context={'titulo':'Item',
-                                                                'plural':'Items'}), name='leerItem'),
+                                                 extra_context={'titulo':'Pregunta',
+                                                                'plural':'Preguntas'}), name='leerItem'),
     
     path('item/detalle/<str:pk>', ObjetoDetalle.as_view(model = models.Items, 
                                                                  template_name="item/detalles.html",
@@ -39,10 +39,10 @@ urlpatterns = [
                                                                  ), name='detallesItem'),
     
     path('item/crear', ItemCrear.as_view(template_name="crud/crear_editar.html",
-                                                           extra_context={'titulo':'Crear Item'}), name='CrearItem'),
+                                                           extra_context={'titulo':'Crear Pregunta'}), name='CrearItem'),
     
     path('item/editar/<str:pk>', ItemActualizar.as_view(template_name="crud/crear_editar.html",
-                                                                          extra_context={'titulo':'Editar Item'}), name='actualizarItem'),
+                                                                          extra_context={'titulo':'Editar Pregunta'}), name='actualizarItem'),
     
     path('item/eliminar/<str:pk>', ItemEliminar.as_view(), name='eliminarItem'),
     
