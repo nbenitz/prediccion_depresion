@@ -19,7 +19,7 @@ class TipoDepresion(models.Model):
 
 class Items(models.Model):
     id = models.AutoField(primary_key=True)
-    descripcion = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=256)
     is_active = models.BooleanField(default=True)
 
     class Meta:

@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.auth_user: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.auth_user: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`, `telefono`, `direccion`, `is_paciente`, `signup_confirmation`) VALUES
 	(1, 'pbkdf2_sha256$150000$ewWOrCeSNUzb$4vP7WDdi2aEfin2GcH/BO4bd7Q7x15rgP7gnmqL7MoA=', '2022-11-16 02:11:57.550621', 1, 'admin', 'Fredy', 'Villalba', 'yonestor87@gmail.com', 1, 1, '2022-11-16 02:10:26.307764', '0994123123', 'Calle González', 0, 0),
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.django_migrations: ~21 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.django_migrations: ~23 rows (aproximadamente)
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(1, 'contenttypes', '0001_initial', '2022-11-16 02:06:02.038837'),
@@ -246,7 +246,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(19, 'sessions', '0001_initial', '2022-11-16 02:07:48.998761'),
 	(20, 'sites', '0001_initial', '2022-11-16 02:07:52.349135'),
 	(21, 'sites', '0002_alter_domain_unique', '2022-11-16 02:07:53.571341'),
-	(22, 'estructura', '0002_auto_20221116_0812', '2022-11-16 11:13:10.714987');
+	(22, 'estructura', '0002_auto_20221116_0812', '2022-11-16 11:13:10.714987'),
+	(23, 'estructura', '0003_auto_20221116_1546', '2022-11-16 18:46:38.529219');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 
 -- Volcando estructura para tabla preddep.django_session
@@ -290,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   CONSTRAINT `doctor_user_id_382cea53_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.doctor: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.doctor: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
 INSERT INTO `doctor` (`id`, `ci`, `user_id`) VALUES
 	(1, '6123123', 1),
@@ -305,8 +306,15 @@ CREATE TABLE IF NOT EXISTS `item` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.item: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.item: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
+INSERT INTO `item` (`id`, `descripcion`, `is_active`) VALUES
+	(1, '¿Está deprimido por alguna situación de la vida?', 1),
+	(2, '¿Muy poco sueño?', 1),
+	(3, '¿Se fatiga o pierde la energía casi cada día?', 1),
+	(4, '¿Me cuesta mucho dormirme por las noches?', 1),
+	(5, '¿Come muy poco?', 1),
+	(6, '¿Problemas de memoria, atención y concentración?', 1);
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 -- Volcando estructura para tabla preddep.paciente
@@ -320,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   CONSTRAINT `paciente_user_id_b672a151_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.paciente: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.paciente: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
 INSERT INTO `paciente` (`id`, `ci`, `user_id`) VALUES
 	(1, '7888222', 3),
@@ -336,7 +344,7 @@ CREATE TABLE IF NOT EXISTS `tipo_depresión` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
--- Volcando datos para la tabla preddep.tipo_depresión: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla preddep.tipo_depresión: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipo_depresión` DISABLE KEYS */;
 INSERT INTO `tipo_depresión` (`id`, `tipo`, `descripcion`, `is_active`) VALUES
 	(1, '1. Trastorno Depresivo Mayor', 'Es el más característico y el que concentra la mayoría de síntomas. Cuando el paciente se muestra extremadamente apático y con inhibición psicomotriz, se habla también de melancolía; en los casos más graves conduce al estupor depresivo. En el que el paciente se encuentra inmóvil e incluso puede rechazar comer o beber.\r\n\r\nExiste un subtipo en el que aparecen trastornos delirantes, es decir creencias firmemente sostenidas pero sin fundamentos adecuados. Los delirios suelen ser de culpa o ruina.', 1),
