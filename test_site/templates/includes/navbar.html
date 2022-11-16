@@ -1,0 +1,122 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark py-1">
+
+	<a class="navbar-brand text-light" href="/">
+		<div class="navbar-brand-icon">
+			<i class="fas fa-hospital"></i>
+		</div>
+		<div class="navbar-brand-text mx-3"></div>
+	</a>
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01"
+		aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarsExample01">
+		<ul class="navbar-nav mr-auto">
+
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{% url 'inicio' %}">Inicio</a>
+			</li>
+
+			{% if request.user.is_authenticated %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle text-light" href="#" id="dropdown01" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					Consultas</a>
+				<div class="dropdown-menu shadow animated--grow-in" aria-labelledby="dropdown01">
+					<a class="dropdown-item" href="#">Historial de Consultas</a>
+					<a class="dropdown-item" href="#">Nueva Consulta</a>
+				</div>
+			</li>
+
+			{% if not request.user.is_client %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle text-light" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+					Administrar</a>
+				<div class="dropdown-menu shadow animated--grow-in" aria-labelledby="dropdown02">
+					<a class="dropdown-item" href="{% url 'leerDoctor' %}">Doctores</a>
+					<a class="dropdown-item" href="{% url 'leerPaciente' %}">Pacientes</a>
+					<!-- <a class="dropdown-item" href="{% url 'leerUsuario' %}">Usuarios</a> -->
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'leerTipoDepresion' %}">Tipos de Depresión</a>
+					<a class="dropdown-item" href="#">Cuestionarios</a>
+					<a class="dropdown-item" href="{% url 'leerItem' %}">Items</a>
+				</div>
+			</li>
+
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle text-light" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">
+					Informes y Mantenimiento</a>
+					<div class="dropdown-menu shadow animated--grow-in" aria-labelledby="dropdown03">
+					<a class="dropdown-item" href="#">Reporte de Pacientes</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Mantenimiento</a>
+				</div>
+			</li>
+			{% else %}
+			<li class="nav-item">
+				<a class="nav-link text-light" href="#">Mis Consultas</a>
+			</li>
+			{% endif %}
+			{% endif %}
+
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{% url 'about' %}">Acerca de</a>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{% url 'contact' %}">Contacto</a>
+			</li>
+		</ul>
+
+		<ul class="navbar-nav navbar-right">
+
+			{% if request.user.is_authenticated %}
+
+			<div class="navbar-divider d-none d-md-block"></div>
+			<!-- Nav Item - User Information -->
+			<li class="nav-item dropdown no-arrow">
+				<a class="nav-link dropdown-toggle text-light" href="#" id="userDropdown" role="button"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user fa-fw"></i>
+					<span>Usuario</span>
+				</a>
+				<!-- Dropdown - User Information -->
+				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+					{% if request.user.is_client %}
+					<a class="dropdown-item" href="{% url 'detallesPaciente' request.user.id %}">
+						<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+						Cuenta</a>
+					{% else %}
+					<a class="dropdown-item" href="{% url 'detallesDoctor' request.user.id %}">
+						<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+						Cuenta</a>
+					{% endif %}
+
+					<a class="dropdown-item" href="#">
+						<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+						Ajustes
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'logout' %}">
+						<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+						Salir
+					</a>
+				</div>
+			</li>
+
+			{% else %}
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{% url 'signup' %}">
+					Registrarme</a></li>
+			<li class="nav-item">
+				<a class="nav-link text-light" href="{% url 'login' %}">
+					Entrar</a></li>
+			{% endif %}
+		</ul>
+
+	</div>
+</nav>

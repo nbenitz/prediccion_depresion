@@ -1,0 +1,41 @@
+{% extends "crud/list.html" %}
+
+{% block table %}
+
+					<thead>
+						<tr>
+							<th>CI</th>
+							<th>Nombre</th>
+							<th>Telefono</th>
+							<th>Direccion</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for user in object_list %}
+							<tr>
+								<td>{{ user.paciente.ci }}</td>
+								<td>{{ user.first_name }} {{user.last_name}}</td>
+								<td>{{ user.telefono }}</td>
+								<td>{{ user.direccion }}</td>
+								<td>
+									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
+									<form method="POST" action="eliminar/{{user.id}}">
+										{% csrf_token %}
+										<div class="btn-group">
+											<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
+											<a href="detalle/{{user.id}}" title="Ver" class="btn btn-success">
+												<i class="far fa-eye"></i></a>
+											<a href="editar/{{user.id}}" title="Editar" class="btn btn-primary">
+												<i class="far fa-edit"></i></a>
+											<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
+												<i class="far fa-trash-alt"></i></button>
+										</div>
+									</form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+env/
+
+estructura/migrations/
+persona/migrations/
+
+
+estructura/__pycache__/
+persona/__pycache__/
+test_site/__pycache__/
+__pycache__/

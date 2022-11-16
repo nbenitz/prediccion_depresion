@@ -1,0 +1,84 @@
+﻿{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block head_title %}Bienvenidos{% endblock %}
+
+{% block in_head %}
+<style>
+	.jumbotron {
+		background-color: #37346b !important;
+		color: #eee !important;
+	}
+
+	.fa-5x {
+		font-size: 6em !important;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+	<div class="container">
+		<div class='row'>
+			<div class='col-sm-8'>
+				<h1>Centro de Salud Gral. Higinio Morínigo</h1>
+				<br>
+				<h4>Sistema Experto Médico para Mejorar el Diagnóstico de Pacientes con Depresión</h4>
+				<p>
+				</p>
+			</div>
+			<div class='col-sm-4' height:315px;>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<h1>{{ titulo }}</h1>
+<hr />
+<br />
+
+<!--	<div class="row">
+	
+		<div class="col-sm-3 col-xs-12 pull-right">
+			{% if not user.is_authenticated %}
+			<p class="lead text-align-center">Suscribirte</p>			
+			<form method="POST" action="">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<input class='btn btn-primary' type='submit' value='Enviar' />
+			</form>
+			{% else %}
+			<p class="lead text-align-center">
+				{{ titulo }}<br/><br/>
+				<i class="fa fa-hand-peace-o fa-5x" aria-hidden="true" style="color: #37346b"></i>
+			</p>
+			{% endif %}
+		</div>
+		
+		<div class="col-sm-3">			
+			<p class="lead text-align-center">
+				Creando con Django &amp; Bootstrap<br/><br/>
+				<i class="far fa-address-card fa-5x" style="color: #37346b"></i>
+			</p>
+		</div>
+		
+		<div class="col-sm-3">
+			<p class="lead text-align-center">
+			Y con mucho amor, claro!<br/>
+			<img src='{% static "img/yop.jpg" %}'/></p>
+		</div>
+		
+		<div class="col-sm-3">
+			<p class="lead text-align-center">
+			Codigo abierto, siempre<br/><br/>
+			<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+			</p>
+		</div>
+		
+	</div>-->
+
+{% endblock %}
