@@ -2,14 +2,10 @@
 
 	{% block card %}
 
-					<p><strong>C.I. Nro.: </strong>{{object.paciente.ci}}</p>
-					<p><strong>Nombre: </strong>{{object.first_name}} {{object.last_name}}</p>
+					<p><strong>C.I. Nro.: </strong>{{object.ci}}</p>
+					<p><strong>Nombre: </strong>{{object.nombre}} {{object.apellido}}</p>
 					<p><strong>Teléfono: </strong>{{object.telefono}}</p>
 					<p><strong>Dirección: </strong>{{object.direccion}}</p>
-					<p><strong>E-mail: </strong>{{object.direccion}}</p>
-					<p><strong>Usuario: </strong>{{object.username}}</p>
-					<p><strong>Último Ingreso: </strong>{{object.last_login}}</p>
-					<p><strong>Fecha de Registro: </strong>{{object.date_joined}}</p>
 					
 					<div class='row justify-content-center'>			
 						
@@ -23,8 +19,5 @@
 							Editar
 						</a>
 					</div><br/>
-					<div class='row justify-content-center'>
-						<p><a href="{% url 'password_change' %}">Cambiar Contraseña</a></p>
-					</div>
 
 	{% endblock %}

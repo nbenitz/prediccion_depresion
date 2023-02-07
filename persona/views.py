@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.contrib import messages 
 from django.contrib.auth import get_user_model, authenticate, login
-from persona.forms import UserForm, PacienteForm, DoctorForm, SignUpForm
+from persona.forms import UserForm, DoctorForm, SignUpForm
 from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
@@ -14,77 +14,53 @@ from django.utils.encoding import force_bytes, force_text
 from persona.tokens import account_activation_token
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.messages.views import SuccessMessageMixin 
+from .models import Paciente
+from django.urls import reverse
 
 
 
 # Create your views here.
 
-class ObjetoListado(LoginRequiredMixin, ListView):         
-    def get_queryset(self):
-        qs = self.model.objects.filter(is_paciente=self.kwargs['is_paciente'])
-        return qs
+class ObjetoListado(LoginRequiredMixin, ListView): 
+    """Lista los objetos model pasado desde urls.py"""
     
-
 class ObjetoDetalle(LoginRequiredMixin, DetailView): 
-    """model = get_user_model()"""
+    """Muestra los detalles del objeto model pasado desde urls.py"""
 
 
-#=================================== CLIENTE ===========================================   
-    
-def create_paciente(request):
-    
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, prefix='UF')
-        paciente_form = PacienteForm(request.POST, prefix='PF')
-            
-        if user_form.is_valid() and paciente_form.is_valid():         
-            user = user_form.save(commit=False)
-            user_form.instance.is_paciente = True
-            user.save()
-    
-            user.paciente.ci = paciente_form.cleaned_data.get('ci')
-            user.paciente.save()
-            messages.success(request, ('Paciente creado correctmente'))
-            return redirect('leerPaciente')
-            
-    else:
-        user_form = UserForm(prefix='UF')
-        paciente_form = PacienteForm(prefix='PF')
-        
-    return render(request, 'Paciente/crear.html',{
-        'user_form': user_form,
-        'paciente_form': paciente_form,
-        })
+#=================================== PACIENTE ===========================================   
+
+class PacienteCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
+    model = Paciente  
+    form = Paciente  
+    fields = "__all__"  
+    success_message = 'Paciente Creado Correctamente !' 
+ 
+    # Redireccionamos a la pagina principal luego de crear un registro o postre
+    def get_success_url(self):        
+        return reverse('leerPaciente')  # Redireccionamos a la vista principal 'leer'
 
 
-@login_required
-def edit_paciente(request, pk):
-    
-    user = get_user_model().objects.get(id=pk)
-    
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, prefix='UF', instance=user)
-        paciente_form = PacienteForm(request.POST, prefix='PF', instance=user.paciente)
-            
-        if user_form.is_valid() and paciente_form.is_valid():
-            user = user_form.save(commit=False)
-            user_form.instance.is_paciente = True
-            user.save()
-    
-            user.paciente.ci = paciente_form.cleaned_data.get('ci')
-            user.paciente.save()
-            messages.success(request, ('Paciente actualizado correctmente'))
-            return redirect('leerPaciente')
-            
-    else:
-        user_form = UserForm(prefix='UF', instance=user)
-        paciente_form = PacienteForm(prefix='PF', instance=user.paciente)
-        
-    return render(request, 'paciente/actualizar.html',{
-        'user_form': user_form,
-        'paciente_form': paciente_form,
-        })
+class PacienteActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView): 
+    model = Paciente  
+    form = Paciente  
+    fields = "__all__" 
+    success_message = 'Paciente Actualizado Correctamente !'  
+ 
+    def get_success_url(self):               
+        return reverse('leerPaciente') 
+
+   
+class PacienteEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView): 
+    model = Paciente 
+    form = Paciente
+    fields = "__all__"     
+ 
+    def get_success_url(self): 
+        success_message = 'Paciente Eliminado Correctamente !' 
+        messages.success (self.request, (success_message))       
+        return reverse('leerPaciente')
     
     
     
@@ -107,7 +83,7 @@ def create_doctor(request):
             
     else:
         user_form = UserForm(prefix='UF')
-        doctor_form = PacienteForm(prefix='PF')
+        doctor_form = DoctorForm(prefix='PF')
         
     return render(request, 'doctor/crear.html',{
         'user_form': user_form,
@@ -149,48 +125,6 @@ class UsuarioListado(LoginRequiredMixin, ListView):
     
 class UsuarioDetalle(LoginRequiredMixin, DetailView): 
     model = get_user_model()
-
-
-def create_paciente2(request):
-    
-    if request.method == 'POST':
-        user_form = SignUpForm(request.POST, prefix='UF')
-        paciente_form = PacienteForm(request.POST, prefix='PF')
-            
-        if user_form.is_valid() and paciente_form.is_valid():         
-            user = user_form.save(commit=False)
-            user_form.instance.is_paciente = True
-            user_form.instance.is_active = False
-            user.save()
-    
-            user.paciente.ci = paciente_form.cleaned_data.get('ci')
-            user.paciente.save()
-            #messages.success(request, ('Paciente creado correctmente'))
-            #return redirect('leerPaciente')
-            
-            
-            current_site = get_current_site(request)
-            subject = 'Por favor activa tu cuenta'
-            email_from = settings.EMAIL_HOST_USER
-            message = render_to_string('registration/activation_request.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message, email_from)
-        
-            return redirect('activation_send')
-            
-            
-    else:
-        user_form = SignUpForm(prefix='UF')
-        paciente_form = PacienteForm(prefix='PF')
-        
-    return render(request, 'paciente/crear.html',{
-        'user_form': user_form,
-        'paciente_form': paciente_form,
-        })
     
     
 def activate(request, uidb64, token):

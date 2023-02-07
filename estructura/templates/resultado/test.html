@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Test de {{ cuestionario.trastorno }}{% endblock %}
+
+{% block content %}
+
+<div class='row justify-content-center align-items-center' style="min-height: calc(100vh - 76px);">
+	<div class='col-md-10 col-sm-offset-3'>
+		<div class="card shadow my-3">
+
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary text-align-center">
+					Test de {{ cuestionario.trastorno }}</h6>
+			</div>
+
+			<div class="card-body">
+
+				<form method="post">
+					{% csrf_token %}
+					{% for pregunta in cuestionario.preguntas.all %}
+					<div class="form-group">
+						<label for="{{ pregunta.id }}">
+							{{ pregunta.nro_item }}- {{ pregunta.pregunta}}</label><br>&nbsp;&nbsp;&nbsp;
+						<input type="radio" id="{{ pregunta.id }}_si" name="{{ pregunta.id }}" value="True" required> Si &nbsp;&nbsp;&nbsp;
+						<input type="radio" id="{{ pregunta.id }}_no" name="{{ pregunta.id }}" value="False" required> No
+					</div>
+					{% endfor %}
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-save"></i>
+						Enviar
+					</button>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

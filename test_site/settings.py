@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     # apps terceros
     'crispy_forms',
     'bootstrap4',
-    'django_tables2',
+    #'django_tables2',
     # mis apps
     'persona',
     'estructura',
@@ -103,17 +103,9 @@ WSGI_APPLICATION = 'test_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        
-        
         'USER': 'root',
         'PASSWORD': 'Z.Checoslovaquia#',
         'HOST': '127.0.0.1',
-        
-        # 'NAME': 'lucatronic$gestion',
-        # 'USER': 'lucatronic',
-        # 'PASSWORD': 'mysql1234',
-        # 'HOST': 'lucatronic.mysql.pythonanywhere-services.com',
-        
         'PORT': '3306',
         'NAME': 'preddep',
     }

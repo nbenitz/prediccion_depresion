@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block head_title %}Tipos de Depresión{% endblock %}
+
+
+{% block in_head %}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages list-group mb-3">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary" {% endif %}>
+		{{ message }}</li>
+		{% endfor %}
+</ul>
+{% endif %}
+
+<!-- Page Heading -->
+<div class='row mx-2 mt-3'>
+	<div class='col-sm-6 col-sm-offset-3'>
+		<h1 class="h3 mb-2 text-gray-800">Tipos de Depresión</h1>
+	</div>
+	<div align="right" class='col-sm-6 btn_crear mb-3'>
+		<a href="crear" class="btn btn-primary">
+			<i class="fas fa-plus"></i> Nuevo Tipo de Depresión</a>
+	</div>
+</div>
+
+<!-- Content Row -->
+
+{% if object_list %}
+
+	{% for object in object_list %}
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card h-100 py-1">
+				<div class="card-body">
+					<div class="row align-items-center">
+
+						<aside class="col-md-9">
+							<div class="info-main">
+								<div class="h5 title"><strong>{{ object.tipo }}</strong></div>
+								<p>{{object.descripcion|linebreaks}}</p>
+							</div> 
+						</aside>
+
+						<aside class="col-sm-3">
+							<div class="info-aside">
+								<form method="POST" action="eliminar/{{object.id}}">
+									{% csrf_token %}
+									<a href="editar/{{object.id}}" title="Editar"
+										class="btn btn-primary btn-block">
+										<i class="far fa-edit"></i>&nbsp;Editar</a>
+									<button class="btn btn-danger btn-block" onclick="return eliminar();" title="Eliminar">
+										<i class="far fa-trash-alt"></i>&nbsp;Eliminar</button>
+								</form>
+							</div> 
+						</aside> 
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+{% else %}
+<div class="card shadow mb-4">
+	<div class="card-body">
+		<p>No hay Tipos de Depresión para mostrar.</p>
+	</div>
+</div>
+{% endif %}
+
+
+<script type="text/javascript">
+	function eliminar() {
+		var x = confirm("Eliminar Habitaci&oacute;n?");
+		if (x)
+			return true;
+		else
+			return false;
+	}
+</script>
+
+
+
+{% endblock %}

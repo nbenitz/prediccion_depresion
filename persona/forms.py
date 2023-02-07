@@ -11,12 +11,6 @@ class UserForm(ModelForm):
         model = get_user_model()
         fields = ('username', 'email', 'first_name', 'last_name', 'telefono', 'direccion')
         
-
-class PacienteForm(ModelForm):    
-    class Meta:
-        model = Paciente
-        fields = ('ci',)
-        
 class DoctorForm(ModelForm):
     class Meta:
         model = Doctor

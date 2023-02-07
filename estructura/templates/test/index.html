@@ -3,9 +3,11 @@
 {% block table %}
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Descripcion</th>
-							<th>Acciones</th>
+							<th>Fecha</th>
+							<th>Paciente</th>
+							<th>Doctor</th>
+							<th>Cuestionario</th>
+							<th>Resultado</th>
 						</tr>
 					</thead>
 
@@ -13,21 +15,18 @@
 						<!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'cliente' y los listamos -->
 						{% for Item in object_list %}
 							<tr>
-								<td>{{ Item.id }}</td>
-								<td>{{ Item.descripcion }}</td>
-								
+								<td>{{ Item.fecha }}</td>
+								<td>{{ Item.paciente }}</td>
+								<td>{{ Item.doctor }}</td>
+								<td>{{ Item.cuestionario }}</td>
 								<td>
 									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
 									<form method="POST" action="eliminar/{{Item.id}}">
 										{% csrf_token %}
 										<!--<div class="btn-group">-->
 											<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-											<a href="detalle/{{Item.id}}" title="Ver" class="btn btn-success">
+											<a href="completado/{{Item.id}}" title="Ver" class="btn btn-success">
 												<i class="far fa-eye"></i></i></a>
-											<a href="editar/{{Item.id}}" title="Editar" class="btn btn-primary">
-												<i class="far fa-edit"></i></i></a>
-											<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
-												<i class="far fa-trash-alt"></i></button>
 										<!--</div>-->
 									</form>
 								</td>

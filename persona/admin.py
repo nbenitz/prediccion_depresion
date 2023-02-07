@@ -8,14 +8,14 @@ from .models import User, Paciente, Doctor
     
 # Define an inline admin descriptor for Worker model
 # which acts a bit like a singleton
-class PacienteProfileInline(admin.StackedInline):
-    model = Paciente
+class DoctorProfileInline(admin.StackedInline):
+    model = Doctor
     can_delete = False
     verbose_name_plural = 'Pacientes'
 
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
-    inlines = (PacienteProfileInline,)
+    inlines = (DoctorProfileInline,)
 
 
 admin.site.register(User, UserAdmin)

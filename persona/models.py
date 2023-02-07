@@ -16,28 +16,23 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     telefono = models.CharField("Teléfono", max_length=15, blank=True, null=True)
     direccion = models.CharField("Dirección", max_length=50, blank=True, null=True)
-    is_paciente = models.BooleanField(default=False)
     signup_confirmation = models.BooleanField(default=False)
-    
-    class Meta:
-        db_table = 'auth_user'
 
     def __str__(self):
         return self.first_name + " " + self.last_name
  
     
 class Paciente(models.Model):
-    user = models.OneToOneField(User,
-                                on_delete=models.CASCADE,
-                                null=True,
-                                related_name='paciente')
     ci = models.CharField(max_length=15, unique=True)
-    
-    class Meta:
-        db_table = 'paciente'
+    nombre = models.CharField(max_length=50)
+    apellido = models.CharField(max_length=50)
+    fecha_nacimiento = models.DateField()
+    telefono = models.CharField("Teléfono", max_length=15, blank=True, null=True)
+    direccion = models.CharField("Dirección", max_length=50, blank=True, null=True)
+    email = models.EmailField(unique=True)
 
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        return self.apellido + ", " + self.nombre
     
   
 class Doctor(models.Model):
@@ -45,25 +40,16 @@ class Doctor(models.Model):
                                 on_delete=models.CASCADE,
                                 null=True,
                                 related_name='doctor')
-    ci = models.CharField(max_length=15, unique=True)
-    
-    class Meta:
-        db_table = 'doctor'
+    ci = models.CharField(max_length=15, unique=True) 
         
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        return self.user.last_name + ", " + self.user.first_name
         
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    if instance.is_paciente:
-        Paciente.objects.get_or_create(user = instance)
-    else:
-        Doctor.objects.get_or_create(user = instance)
+    Doctor.objects.get_or_create(user = instance)
     
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    if instance.is_paciente:
-        instance.paciente.save()
-    else:
-        instance.doctor.save()
+    instance.doctor.save()

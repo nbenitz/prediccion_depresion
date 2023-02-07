@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import TipoDepresion, Items
+from .models import Escala, Pregunta
 
 
-admin.site.register(TipoDepresion)
-admin.site.register(Items)
+admin.site.register(Escala)
+admin.site.register(Pregunta)
 

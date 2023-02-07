@@ -6,46 +6,54 @@ from persona.views import ObjetoListado, ObjetoDetalle, activation_sent_view,\
     activate, activation_complete_view
 from persona.views import UsuarioListado
 
-from persona.views import create_paciente, edit_paciente, create_doctor, edit_doctor,\
-    create_paciente2
+from persona.views import PacienteCrear, PacienteActualizar, PacienteEliminar, create_doctor, edit_doctor
+from persona import models
 
 urlpatterns = [
-    path('paciente/', ObjetoListado.as_view(template_name="paciente/index.html",
-                                            model = get_user_model(),
-                                            extra_context={'titulo':'Paciente',
-                                                           'plural':'Pacientes'}
-                                            ), name='leerPaciente', kwargs={'is_paciente':'1'}),
-    
+    path('paciente/', ObjetoListado.as_view(model=models.Paciente,
+                                            template_name="paciente/index.html",
+                                            extra_context={'titulo': 'Paciente',
+                                                           'plural': 'Pacientes'}
+                                            ), name='leerPaciente'),
+
+
     path('paciente/detalle/<str:pk>', ObjetoDetalle.as_view(template_name="paciente/detalles.html",
-                                                           model = get_user_model(),
-                                                           extra_context={'titulo':'Paciente'}
-                                                           ), name='detallesPaciente'),
+                                                            model=models.Paciente,
+                                                            extra_context={
+                                                                'titulo': 'Paciente'}
+                                                            ), name='detallesPaciente'),
+
+    path('paciente/crear', PacienteCrear.as_view(template_name="crud/crear_editar.html",
+                                                       extra_context={'titulo':'Crear Paciente'}), name='CrearPaciente'),
     
-    path('paciente/crear', create_paciente2, name='crearPaciente'),
-    path('paciente/editar/<str:pk>', edit_paciente, name='actualizarPaciente'),
+    path('paciente/editar/<str:pk>', PacienteActualizar.as_view(template_name="crud/crear_editar.html",
+                                                                      extra_context={'titulo':'Editar Paciente'}), name='actualizarPaciente'),
+    
     #path('paciente/eliminar/<str:pk>', PacienteEliminar.as_view(), name='eliminarPaciente'),
 
+
     path('doctor/', ObjetoListado.as_view(template_name="doctor/index.html",
-                                            model = get_user_model(),
-                                            extra_context={'titulo':'Psicólogo',
-                                                           'plural':'Psicólogos'}
-                                            ), name='leerDoctor', kwargs={'is_paciente':'0'}),
-    
+                                          model=get_user_model(),
+                                          extra_context={'titulo': 'Doctor',
+                                                         'plural': 'Doctores'}
+                                          ), name='leerDoctor'),
+
     path('doctor/detalle/<str:pk>', ObjetoDetalle.as_view(template_name="doctor/detalles.html",
-                                                            model = get_user_model(),
-                                                            extra_context={'titulo':'Psicólogo'}
-                                                            ), name='detallesDoctor'),
-    
+                                                          model=get_user_model(),
+                                                          extra_context={
+                                                              'titulo': 'Doctor'}
+                                                          ), name='detallesDoctor'),
+
     path('doctor/crear', create_doctor, name='crearDoctor'),
     path('doctor/editar/<str:pk>', edit_doctor, name='actualizarDoctor'),
-    #path('doctor/eliminar/<str:pk>', DoctorEliminar.as_view(), name='eliminarDoctor'),
+    # path('doctor/eliminar/<str:pk>', DoctorEliminar.as_view(), name='eliminarDoctor'),
 
-    path('user/', UsuarioListado.as_view(template_name="user/index.html"), name='leerUsuario'),   
+    path('user/', UsuarioListado.as_view(template_name="user/index.html"),
+         name='leerUsuario'),
 
-    path('signup/', create_paciente2, name="signup"),
+    path('signup/', create_doctor, name="signup"),
     path('sent/', activation_sent_view, name="activation_send"),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),
     path('activated/', activation_complete_view, name='activation_complete'),
-    
-]
 
+]

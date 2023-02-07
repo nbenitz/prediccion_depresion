@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block head_title %}Tipos de Depresión{% endblock %}
+{% block head_title %}Trastornos{% endblock %}
 
 
 {% block in_head %}
@@ -22,11 +22,11 @@
 <!-- Page Heading -->
 <div class='row mx-2 mt-3'>
 	<div class='col-sm-6 col-sm-offset-3'>
-		<h1 class="h3 mb-2 text-gray-800">Tipos de Depresión</h1>
+		<h1 class="h3 mb-2 text-gray-800">Trastornos</h1>
 	</div>
 	<div align="right" class='col-sm-6 btn_crear mb-3'>
 		<a href="crear" class="btn btn-primary">
-			<i class="fas fa-plus"></i> Nuevo Tipo de Depresión</a>
+			<i class="fas fa-plus"></i> Nuevo Trastorno</a>
 	</div>
 </div>
 
@@ -43,7 +43,7 @@
 
 					<aside class="col-md-9">
 						<div class="info-main">
-							<div class="h5 title"><strong>{{ object.tipo }}</strong></div>
+							<div class="h5 title"><strong>{{ object.nombre }}</strong></div>
 							<p>{{object.descripcion|linebreaks}}</p>
 						</div> 
 					</aside>
@@ -52,20 +52,14 @@
 						<div class="info-aside">
 							<form method="POST" action="eliminar/{{object.id}}">
 								{% csrf_token %}
-								<!--<div class="btn-group">-->
-								<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-								<!-- <a href="detalle/{{object.id}}" title="Ver"
-									class="btn btn-success btn-block">
-									<i class="far fa-eye"></i>&nbsp;Detalles</a> -->
 								<a href="editar/{{object.id}}" title="Editar"
 									class="btn btn-primary btn-block">
 									<i class="far fa-edit"></i>&nbsp;Editar</a>
 								<button class="btn btn-danger btn-block" onclick="return eliminar();" title="Eliminar">
 									<i class="far fa-trash-alt"></i>&nbsp;Eliminar</button>
-								<!--</div>-->
 							</form>
-						</div> <!-- info-aside.// -->
-					</aside> <!-- col.// -->
+						</div>
+					</aside>
 
 
 
