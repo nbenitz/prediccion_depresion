@@ -1,0 +1,40 @@
+{% extends "crud/card.html" %}
+{% load crispy_forms_tags %}
+
+{% block card %}
+
+<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form|crispy }}
+
+	<button type="submit" class="btn btn-primary">
+		<i class="fas fa-save"></i>
+		Aceptar
+	</button>
+
+	<a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary">
+		<i class="fas fa-caret-left"></i>
+		Cancelar
+	</a>
+</form>
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		//$("#id_fecha_nacimiento").attr('type', 'date');
+		$("#id_fecha_nacimiento").attr('placeholder', 'Seleccione una fecha');
+		jQuery.browser = {};
+		$(function () {
+			$('#id_fecha_nacimiento').datepicker({
+				dateFormat: 'yy-mm-dd',
+				changeMonth: true,
+				changeYear: true,
+				yearRange: '1923:2043',
+				minDate: new Date(1923, 10 - 1, 25),
+				maxDate: '+20Y',
+			});
+		});
+	});
+</script>
+
+{% endblock %}

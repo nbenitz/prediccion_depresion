@@ -14,6 +14,26 @@
 	.fa-5x {
 		font-size: 6em !important;
 	}
+
+	img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+
+	.portrait {
+		height: 80px;
+		width: 30px;
+	}
+
+	.landscape {
+		height: 30px;
+		width: 80px;
+	}
+
+	.square {
+		height: 75px;
+		width: 75px;
+	}
 </style>
 {% endblock %}
 
@@ -28,10 +48,16 @@
 				<br>
 				<h4>Sistema Experto Médico para Mejorar el Diagnóstico de Pacientes con Depresión</h4>
 				<p>
+					La depresión es un trastorno del estado de ánimo que se caracteriza por una tristeza persistente,
+					pérdida de interés o placer en actividades que solían ser disfrutadas, y cambios en el apetito,
+					sueño y energía. Puede afectar a la capacidad de una persona para llevar a cabo tareas cotidianas y
+					puede tener un impacto negativo en las relaciones personales y en la vida laboral. La depresión
+					puede ser un trastorno aislado o formar parte de un trastorno mayor, y puede ser tratada con una
+					combinación de medicación, terapia y cambios en el estilo de vida.
 				</p>
 			</div>
 			<div class='col-sm-4' height:315px;>
-
+				<img src="{% static 'img/depresion.jpg' %}">
 			</div>
 		</div>
 	</div>

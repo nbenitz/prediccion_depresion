@@ -23,13 +23,13 @@ urlpatterns = [
                                                                 'titulo': 'Paciente'}
                                                             ), name='detallesPaciente'),
 
-    path('paciente/crear', PacienteCrear.as_view(template_name="crud/crear_editar.html",
+    path('paciente/crear', PacienteCrear.as_view(template_name="paciente/crear_editar.html",
                                                        extra_context={'titulo':'Crear Paciente'}), name='CrearPaciente'),
     
-    path('paciente/editar/<str:pk>', PacienteActualizar.as_view(template_name="crud/crear_editar.html",
+    path('paciente/editar/<str:pk>', PacienteActualizar.as_view(template_name="paciente/crear_editar.html",
                                                                       extra_context={'titulo':'Editar Paciente'}), name='actualizarPaciente'),
     
-    #path('paciente/eliminar/<str:pk>', PacienteEliminar.as_view(), name='eliminarPaciente'),
+    # path('paciente/eliminar/<str:pk>', PacienteEliminar.as_view(), name='eliminarPaciente'),
 
 
     path('doctor/', ObjetoListado.as_view(template_name="doctor/index.html",
