@@ -189,8 +189,6 @@ def procesar_test(request, test_id):
 
         return redirect('test_completado', test_id=test_id)
 
-    print(cuestionario)
-    print(cuestionario.preguntas.all())
     return render(request, 'resultado/test.html', {'cuestionario': cuestionario})
 
 
