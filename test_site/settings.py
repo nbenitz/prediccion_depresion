@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     # apps terceros
     'crispy_forms',
     'bootstrap4',
+    "crispy_bootstrap4",
     #'django_tables2',
     # mis apps
     'persona',
@@ -169,7 +170,10 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_env", "static_root")
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_env", "media_root")
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 SITE_ID = 1

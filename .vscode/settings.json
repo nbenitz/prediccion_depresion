@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver",
+                "--noreload"
+            ],
+            "stopOnEntry": false,
+            "cwd": "${workspaceFolder}",
+            "django": true,
+            "debuggerType": "gevent",
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "test_site.settings"
+            },
+            "envFile": "${workspaceFolder}/.env",
+            "pythonPath": "${config:python.pythonPath}",
+            "logToFile": true,
+            "preLaunchTask": "python: manage.py runserver"
+        }
+    ]
+}

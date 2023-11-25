@@ -9,14 +9,13 @@ from django.http.response import HttpResponse
 from django.views.generic import TemplateView
 
 
-# Create your views here.
-
 def inicio(request):
     return render(request, "inicio.html", {})
 
 
 def about(request):
     return render(request, "about.html")
+
 
 def contact(request):
     titulo = "Contacto"

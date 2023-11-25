@@ -1,5 +1,4 @@
 ﻿{% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% load static %}
 
 {% block head_title %}Bienvenidos{% endblock %}
@@ -66,45 +65,5 @@
 <h1>{{ titulo }}</h1>
 <hr />
 <br />
-
-<!--	<div class="row">
-	
-		<div class="col-sm-3 col-xs-12 pull-right">
-			{% if not user.is_authenticated %}
-			<p class="lead text-align-center">Suscribirte</p>			
-			<form method="POST" action="">
-				{% csrf_token %}
-				{{ form|crispy }}
-				<input class='btn btn-primary' type='submit' value='Enviar' />
-			</form>
-			{% else %}
-			<p class="lead text-align-center">
-				{{ titulo }}<br/><br/>
-				<i class="fa fa-hand-peace-o fa-5x" aria-hidden="true" style="color: #37346b"></i>
-			</p>
-			{% endif %}
-		</div>
-		
-		<div class="col-sm-3">			
-			<p class="lead text-align-center">
-				Creando con Django &amp; Bootstrap<br/><br/>
-				<i class="far fa-address-card fa-5x" style="color: #37346b"></i>
-			</p>
-		</div>
-		
-		<div class="col-sm-3">
-			<p class="lead text-align-center">
-			Y con mucho amor, claro!<br/>
-			<img src='{% static "img/yop.jpg" %}'/></p>
-		</div>
-		
-		<div class="col-sm-3">
-			<p class="lead text-align-center">
-			Codigo abierto, siempre<br/><br/>
-			<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-			</p>
-		</div>
-		
-	</div>-->
 
 {% endblock %}

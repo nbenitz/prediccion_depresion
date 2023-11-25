@@ -5,7 +5,7 @@
 {% block content %}
 
 	{% if messages %}
-		<ul class="messages list-group mb-3">
+		<ul class="messages m-1 list-group">
 			{% for message in messages %}
 				<li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
 			{% endfor %}
@@ -26,17 +26,12 @@
 			</div>	
 		</div>
 		<div class="card-body">
-			{% if object_list %}
-		
+			{% if object_list %}		
 			<div class="table-responsive">
-
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-					
+				<table class="table table-bordered table-hover table-sm" id="dataTable" width="100%" cellspacing="0">	
 					{% block table %}
-					{% endblock %}
-				
+					{% endblock %}	
 				</table>
-
 			</div>
 			{% else %}
 				<p>No hay {{ titulo }} para mostrar.</p>

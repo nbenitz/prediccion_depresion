@@ -36,20 +36,16 @@ class Paciente(models.Model):
     
   
 class Doctor(models.Model):
-    user = models.OneToOneField(User,
-                                on_delete=models.CASCADE,
-                                null=True,
-                                related_name='doctor')
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='doctor'
+    )
     ci = models.CharField(max_length=15, unique=True) 
         
     def __str__(self):
         return self.user.last_name + ", " + self.user.first_name
-        
+
+
     
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    Doctor.objects.get_or_create(user = instance)
-    
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.doctor.save()

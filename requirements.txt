@@ -1,6 +1,6 @@
-Django==2.2.4
-django-bootstrap4==1.0.1
-django-crispy-forms==1.7.2
+Django==4.2.7
+django-bootstrap4==23.2
+django-crispy-forms==2.1
 mysqlclient
 #paho-mqtt
 #reportlab==3.5.34
