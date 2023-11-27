@@ -8,8 +8,7 @@
 			<th>Nombre</th>
 			<th>Telefono</th>
 			<th>Direccion</th>
-
-			<th style="text-align: center; width: 5%;">Acciones</th>
+			<th style="text-align: center; width: 9%;">Acciones</th>
 		</tr>
 	</thead>
 
@@ -20,7 +19,7 @@
 				<td>{{ user.first_name }} {{user.last_name}}</td>
 				<td>{{ user.telefono }}</td>
 				<td>{{ user.direccion|default:"" }}</td>
-				<td style="text-align: center; width: 5%;">
+				<td style="text-align: center; width: 9%;">
 					<form method="POST" action="eliminar/{{user.id}}">
 						{% csrf_token %}
 						<div class="btn-group">

@@ -8,7 +8,7 @@
 							<th>Nombre</th>
 							<th>Telefono</th>
 							<th>Direccion</th>
-							<th>Acciones</th>
+							<th style="text-align: center; width: 9%;">Acciones</th>
 						</tr>
 					</thead>
 
@@ -19,7 +19,7 @@
 								<td>{{ object.nombre }} {{object.apellido}}</td>
 								<td>{{ object.telefono }}</td>
 								<td>{{ object.direccion }}</td>
-								<td>
+								<td style="text-align: center; width: 9%;">
 									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
 									<form method="POST" action="eliminar/{{object.id}}">
 										{% csrf_token %}

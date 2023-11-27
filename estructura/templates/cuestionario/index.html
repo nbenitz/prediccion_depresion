@@ -1,24 +1,21 @@
 {% extends "crud/list.html" %}
 
 {% block table %}
-					<!-- <thead>
+					<thead>
 						<tr>
 							<th>Trastorno que evalúa el Cuestonario</th>
-							<th>Acciones</th>
+							<th style="text-align: center; width: 9%;">Acciones</th>
 						</tr>
-					</thead> -->
+					</thead>
 
 					<tbody>
-						<!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'cliente' y los listamos -->
 						{% for Item in object_list %}
 							<tr>
-								<td>- Cuestionario de {{ Item.trastorno }}</td>
+								<td>{{ Item.trastorno }}</td>
 								
-								<td>
-									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
+								<td style="text-align: center; width: 9%;">
 									<form method="POST" action="eliminar/{{Item.id}}">
 										{% csrf_token %}
-										<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
 										<a href="detalle/{{Item.id}}" title="Ver" class="btn btn-success">
 											<i class="far fa-eye"></i></i></a>
 										<a href="editar/{{Item.id}}" title="Editar" class="btn btn-primary">

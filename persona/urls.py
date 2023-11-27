@@ -2,7 +2,6 @@ from django.urls import path
 from django.contrib.auth import get_user_model
 
 from persona.views import ObjetoListado, ObjetoDetalle, activation_sent_view, activate, activation_complete_view
-from persona.views import UsuarioListado
 
 from persona.views import PacienteCrear, PacienteActualizar, PacienteEliminar, create_doctor, edit_doctor
 from persona import models
@@ -46,7 +45,6 @@ urlpatterns = [
     path('doctor/crear', create_doctor, name='crearDoctor'),
     path('doctor/editar/<str:pk>', edit_doctor, name='actualizarDoctor'),
     # path('doctor/eliminar/<str:pk>', DoctorEliminar.as_view(), name='eliminarDoctor'),
-    path('user/', UsuarioListado.as_view(template_name="user/index.html"),name='leerUsuario'),
     path('signup/', create_doctor, name="signup"),
     path('sent/', activation_sent_view, name="activation_send"),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),

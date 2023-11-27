@@ -35,20 +35,20 @@
 
 {% for object in object_list %}
 <div class="row">
-	<!-- Card Temperatura -->
+	<!-- Card -->
 	<div class="col-sm-12">
-		<div class="card h-100 py-1">
+		<div class="card h-100 py-1 mx-3">
 			<div class="card-body">
 				<div class="row align-items-center">
 
-					<aside class="col-md-9">
+					<aside class="col-md-11">
 						<div class="info-main">
 							<div class="h5 title"><strong>{{ object.nombre }}</strong></div>
 							<p>{{object.descripcion|linebreaks}}</p>
 						</div> 
 					</aside>
 
-					<aside class="col-sm-3">
+					<aside class="col-sm-1">
 						<div class="info-aside">
 							<form method="POST" action="eliminar/{{object.id}}">
 								{% csrf_token %}

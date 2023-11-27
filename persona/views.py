@@ -85,7 +85,8 @@ def create_doctor(request):
     return render(request, 'doctor/crear.html',{
         'user_form': user_form,
         'doctor_form': doctor_form,
-        })
+        'titulo': 'Crear Doctor',
+    })
 
 
 @login_required
@@ -110,17 +111,11 @@ def edit_doctor(request, pk):
     return render(request, 'doctor/crear.html', {
         'user_form': user_form,
         'doctor_form': doctor_form,
+        'titulo': 'Editar Doctor',
     })
 
         
-#=================================== USUARIO ===========================================
-class UsuarioListado(LoginRequiredMixin, ListView): 
-    model = get_user_model() 
-    
-class UsuarioDetalle(LoginRequiredMixin, DetailView): 
-    model = get_user_model()
-    
-    
+#=================================== USUARIO =========================================== 
 def activate(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
