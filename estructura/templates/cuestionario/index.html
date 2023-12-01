@@ -1,33 +1,32 @@
 {% extends "crud/list.html" %}
 
 {% block table %}
-					<thead>
-						<tr>
-							<th>Trastorno que evalúa el Cuestonario</th>
-							<th style="text-align: center; width: 9%;">Acciones</th>
-						</tr>
-					</thead>
+<thead>
+	<tr>
+		<th>Trastorno que evalúa el Cuestonario</th>
+		<th style="text-align: center; width: 9%;">Acciones</th>
+	</tr>
+</thead>
 
-					<tbody>
-						{% for Item in object_list %}
-							<tr>
-								<td>{{ Item.trastorno }}</td>
-								
-								<td style="text-align: center; width: 9%;">
-									<form method="POST" action="eliminar/{{Item.id}}">
-										{% csrf_token %}
-										<div class="btn-group">
-											<a href="detalle/{{Item.id}}" title="Ver" class="btn btn-success">
-												<i class="far fa-eye"></i></i></a>
-											<a href="editar/{{Item.id}}" title="Editar" class="btn btn-primary">
-												<i class="far fa-edit"></i></i></a>
-											<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
-												<i class="far fa-trash-alt"></i></button>
-										</div>
-									</form>
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-
+<tbody>
+	{% for Item in object_list %}
+		<tr>
+			<td>{{ Item.trastorno }}</td>
+			
+			<td style="text-align: center; width: 9%;">
+				<form method="POST" action="eliminar/{{Item.id}}">
+					{% csrf_token %}
+					<div class="btn-group">
+						<a href="detalle/{{Item.id}}" title="Ver" class="btn btn-success">
+							<i class="far fa-eye"></i></i></a>
+						<a href="editar/{{Item.id}}" title="Editar" class="btn btn-primary">
+							<i class="far fa-edit"></i></i></a>
+						<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
+							<i class="far fa-trash-alt"></i></button>
+					</div>
+				</form>
+			</td>
+		</tr>
+	{% endfor %}
+</tbody>
 {% endblock %}

@@ -66,7 +66,7 @@ class Test(models.Model):
         return f'{self.paciente} - {self.fecha}'
 
 class Resultado(models.Model):
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name='resultado')
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
     respuesta = models.BooleanField()
 

@@ -10,8 +10,9 @@
 		<div class="card shadow my-3">
 
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary text-align-center">
-					Test de {{ cuestionario.trastorno }}</h6>
+				<h5 class="m-0 font-weight-bold text-primary">
+					Test de {{ cuestionario.trastorno }}
+				</h5>
 			</div>
 
 			<div class="card-body">
@@ -26,7 +27,7 @@
 						<input type="radio" id="{{ pregunta.id }}_no" name="{{ pregunta.id }}" value="False" required> No
 					</div>
 					{% endfor %}
-					<button type="submit" class="btn btn-primary">
+					<button type="submit" class="btn btn-success">
 						<i class="fas fa-save"></i>
 						Enviar
 					</button>

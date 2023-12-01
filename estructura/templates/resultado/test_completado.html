@@ -2,71 +2,67 @@
 
 {% block content %}
 <div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <div class='row'>
-      <div class='col-sm-6 col-sm-offset-3'>
-        <h4 class="h4 mb-0 text-gray-800">Resultados del Test</h4>
-      </div>
-    </div>	
-  </div>
-  <div class="card-body">
-    {% if resultados %}
+    <div class="card-header py-3">
+        <div class='row'>
+            <div class='col-sm-6 col-sm-offset-3'>
+                <h4 class="h4 mb-0 text-gray-800">Resultados del Test</h4>
+            </div>
+            {% if resultados %}
+            <div align="right" class='col-sm-6 mb-0'>
+                <a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary" style="padding-top: 0.4rem;">
+                    <i class="fas fa-caret-left"></i> Regresar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 
+    <div class="card-body">
+        {% if resultados %}
+            <div class="card">
+                
+                <div class="card-header">
+                    <div class="h5 title m-0"><b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b></div>
+                </div>
 
-    <div class="info-main">
-      {% if tipo_depresion %}
-        <div class="h5 title"><strong>{{ tipo_depresion.tipo }}</strong></div>
-        <p>{{tipo_depresion.descripcion|linebreaks}}</p>
-        <div class="h5"><strong>Características</strong></div>
-        <p>{{tipo_depresion.caracteristicas|linebreaks}}</p>
-        <div class="h5"><strong>Tratamientos</strong></div>
-        <p>{{tipo_depresion.tratamientos|linebreaks}}</p>
-        
-      {% else %}
-        <div class="h5 title"><strong>No se determina ningún tipo de depresión.</strong></div><br>
-      {% endif %}
-      <div class="h5"><strong>Respustas al Cuestionario</strong></div>
-    </div> 
+                <div class="card-body">
+                    {% if tipo_depresion %}
+                        {{ tipo_depresion.descripcion|linebreaks }}
 
+                        <div class="h5"><b>Características</b></div>
+                        {{tipo_depresion.caracteristicas|linebreaks}}
 
+                        <div class="h5"><b>Tratamientos</b></div>
+                        {{tipo_depresion.tratamientos|linebreaks}}
+                    {% endif %}
 
-    <div class="table-responsive">
+                    <div class="h5"><b>Respuestas al Cuestionario</b></div>
+                    <ol>
+                        {% for resultado in resultados %}
+                        <li>
+                            {{ resultado.pregunta }}
+                            <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        {% else %}
+            <div class="h5">Aún no se ha completado el cuestionario. Desea completarlo?</div><br>
+            <div>
+                <a href="{% url 'procesar_test' test_id %}" type="submit" class="btn btn-primary">
+                    <!-- <i class="fas fa-caret-left"></i> -->
+                    Completar ahora
+                </a>
 
-      <table class="table" width="80%" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Pregunta</th>
-              <th>Respuesta</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for resultado in resultados %}
-              <tr>
-                <td>{{ resultado.pregunta }}</td>
-                <td>{% if resultado.respuesta %}Si{% else %}No{% endif %}</td>
-              </tr>
-            {% endfor %}
-          </tbody>    
-      </table>
+                <a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-secondary">
+                    <i class="fas fa-caret-left"></i>
+                    Cancelar
+                </a>
+            </div>
+        {% endif %}
 
     </div>
-    {% else %}
-      <div class="h5">Aún no se ha completado el cuestionario. Desea completarlo?</div><br>
-      <div>
-        <a href="{% url 'procesar_test' test_id %}" type="submit" class="btn btn-primary">
-          <!-- <i class="fas fa-caret-left"></i> -->
-          Completar ahora
-        </a>
-      
-        <a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary">
-          <i class="fas fa-caret-left"></i>
-          Cancelar
-        </a>
-      </div>
-    {% endif %}
-
-
-  </div>
 </div>
-  
+
 {% endblock %}

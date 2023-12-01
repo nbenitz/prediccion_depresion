@@ -9,7 +9,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from .diagnostico import determine_depression_type
-# Create your views here.
+from .forms import TestForm
+
 
 class ObjetoListado(LoginRequiredMixin, ListView): 
     """Lista los objetos model pasado desde urls.py"""
@@ -150,12 +151,12 @@ class CuestionarioEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 # ========================== Test ===================================================================
 class TestCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
     model = Test 
-    form = Test  
-    fields = "__all__" 
+    form_class = TestForm  
     success_message = 'Test Creado Correctamente !' 
  
     def get_success_url(self):        
         return reverse('procesar_test', args=[self.object.id])
+
 
 class TestActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView): 
     model = Test  

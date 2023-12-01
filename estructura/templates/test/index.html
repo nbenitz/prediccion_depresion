@@ -1,37 +1,35 @@
 {% extends "crud/list.html" %}
 
 {% block table %}
-					<thead>
-						<tr>
-							<th>Fecha</th>
-							<th>Paciente</th>
-							<th>Doctor</th>
-							<th>Cuestionario</th>
-							<th>Resultado</th>
-						</tr>
-					</thead>
+<thead>
+	<tr>
+		<th>Fecha</th>
+		<th>Paciente</th>
+		<th>Doctor</th>
+		<th>Cuestionario</th>
+		<th style="text-align: center; width: 5%;">Resultado</th>
+	</tr>
+</thead>
 
-					<tbody>
-						<!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'cliente' y los listamos -->
-						{% for Item in object_list %}
-							<tr>
-								<td>{{ Item.fecha }}</td>
-								<td>{{ Item.paciente }}</td>
-								<td>{{ Item.doctor }}</td>
-								<td>{{ Item.cuestionario }}</td>
-								<td>
-									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
-									<form method="POST" action="eliminar/{{Item.id}}">
-										{% csrf_token %}
-										<!--<div class="btn-group">-->
-											<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
-											<a href="completado/{{Item.id}}" title="Ver" class="btn btn-success">
-												<i class="far fa-eye"></i></i></a>
-										<!--</div>-->
-									</form>
-								</td>
-							</tr>
-						{% endfor %}
-					</tbody>
+<tbody>
+	<!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'cliente' y los listamos -->
+	{% for Item in object_list %}
+		<tr>
+			<td>{{ Item.fecha }}</td>
+			<td>{{ Item.paciente }}</td>
+			<td>{{ Item.doctor }}</td>
+			<td>{{ Item.cuestionario }}</td>
+			<td style="text-align: center; width: 5%;">
+				<form method="POST" action="eliminar/{{Item.id}}">
+					{% csrf_token %}
+					<!--<div class="btn-group">-->
+						<a href="completado/{{Item.id}}" title="Ver" class="btn btn-success">
+							<i class="far fa-eye"></i></i></a>
+					<!--</div>-->
+				</form>
+			</td>
+		</tr>
+	{% endfor %}
+</tbody>
 
 {% endblock %}

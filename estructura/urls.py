@@ -75,8 +75,7 @@ urlpatterns = [
     path('pregunta/editar/<str:pk>', PreguntaActualizar.as_view(template_name="crud/crear_editar.html",
                                                                 extra_context={'titulo': 'Editar Pregunta'}), name='actualizarPregunta'),
 
-    path('pregunta/eliminar/<str:pk>',
-         PreguntaEliminar.as_view(), name='eliminarPregunta'),
+    path('pregunta/eliminar/<str:pk>', PreguntaEliminar.as_view(), name='eliminarPregunta'),
 
     # ----------------------------------- Cuestionario URLs -----------------------------------------------------
     path('cuestionario/', ObjetoListado.as_view(model=models.Cuestionario,
@@ -99,7 +98,7 @@ urlpatterns = [
                                                        'plural': 'Tests'}), name='leerTest'),
 
     path('test/crear', TestCrear.as_view(template_name="test/crear.html",
-                                          extra_context={'titulo': 'Generar Test'}), name='CrearTest'),
+                                         extra_context={'titulo': 'Generar Test'}), name='CrearTest'),
 
     path('test/<int:test_id>/procesar',
          views.procesar_test, name='procesar_test'),
