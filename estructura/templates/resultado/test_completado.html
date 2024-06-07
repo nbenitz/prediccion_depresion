@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow mb-4">
+<div class="card shadow">
     <div class="card-header py-3">
         <div class='row'>
             <div class='col-sm-6 col-sm-offset-3'>
@@ -19,32 +19,44 @@
 
     <div class="card-body">
         {% if resultados %}
-            <div class="card">
+            <div class="card shadow">
                 
-                <div class="card-header">
-                    <div class="h5 title m-0"><b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b></div>
+                <div class="card-header bg-transparent">
+                    <div class="h5 title m-0 text-primary"><b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b></div>
                 </div>
 
                 <div class="card-body">
                     {% if tipo_depresion %}
                         {{ tipo_depresion.descripcion|linebreaks }}
 
-                        <div class="h5"><b>Características</b></div>
-                        {{tipo_depresion.caracteristicas|linebreaks}}
+                        <div class="card  mb-3">
+                            <div class="card-body pb-0">
+                                <div class="h5"><b>Características</b></div>
+                                {{tipo_depresion.caracteristicas|linebreaks}}
+                            </div>
+                        </div>
 
-                        <div class="h5"><b>Tratamientos</b></div>
-                        {{tipo_depresion.tratamientos|linebreaks}}
+                        <div class="card  mb-3">
+                            <div class="card-body pb-0">
+                                <div class="h5"><b>Tratamientos</b></div>
+                                {{tipo_depresion.tratamientos|linebreaks}}
+                            </div>
+                        </div>   
                     {% endif %}
 
-                    <div class="h5"><b>Respuestas al Cuestionario</b></div>
-                    <ol>
-                        {% for resultado in resultados %}
-                        <li>
-                            {{ resultado.pregunta }}
-                            <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
-                        </li>
-                        {% endfor %}
-                    </ol>
+                    <div class="card ">
+                        <div class="card-body">
+                            <div class="h5"><b>Respuestas al Cuestionario</b></div>
+                            <ol>
+                                {% for resultado in resultados %}
+                                <li>
+                                    {{ resultado.pregunta }}
+                                    <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% else %}
