@@ -1,77 +1,90 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card shadow">
+<div class="card shadow" style="min-height: calc(100vh - 76px);">
     <div class="card-header py-3">
         <div class='row'>
             <div class='col-sm-6 col-sm-offset-3'>
                 <h4 class="h4 mb-0 text-gray-800">Resultados del Test</h4>
             </div>
-            {% if resultados %}
             <div align="right" class='col-sm-6 mb-0'>
-                <a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary" style="padding-top: 0.4rem;">
+                <a href="{{ url_back }}" type="submit" class="btn btn-primary"
+                    style="padding-top: 0.4rem;">
                     <i class="fas fa-caret-left"></i> Regresar
                 </a>
             </div>
-            {% endif %}
         </div>
     </div>
 
     <div class="card-body">
         {% if resultados %}
-            <div class="card shadow">
-                
-                <div class="card-header bg-transparent">
-                    <div class="h5 title m-0 text-primary"><b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b></div>
+        <div class="card shadow">
+
+            <div class="card-header bg-transparent">
+                <div class="h5 title m-0 text-primary">
+                    <b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b>
+                </div>
+            </div>
+
+            <div class="card-body">
+                {% if tipo_depresion %}
+                {{ tipo_depresion.descripcion|linebreaks }}
+
+                <div class="card  mb-3">
+                    <div class="card-body pb-0">
+                        <div class="h5"><b>Características</b></div>
+                        {{tipo_depresion.caracteristicas|linebreaks}}
+                    </div>
                 </div>
 
-                <div class="card-body">
-                    {% if tipo_depresion %}
-                        {{ tipo_depresion.descripcion|linebreaks }}
+                <div class="card  mb-3">
+                    <div class="card-body pb-0">
+                        <div class="h5"><b>Tratamientos</b></div>
+                        {{tipo_depresion.tratamientos|linebreaks}}
+                    </div>
+                </div>
+                {% endif %}
 
-                        <div class="card  mb-3">
-                            <div class="card-body pb-0">
-                                <div class="h5"><b>Características</b></div>
-                                {{tipo_depresion.caracteristicas|linebreaks}}
-                            </div>
-                        </div>
-
-                        <div class="card  mb-3">
-                            <div class="card-body pb-0">
-                                <div class="h5"><b>Tratamientos</b></div>
-                                {{tipo_depresion.tratamientos|linebreaks}}
-                            </div>
-                        </div>   
-                    {% endif %}
-
-                    <div class="card ">
-                        <div class="card-body">
-                            <div class="h5"><b>Respuestas al Cuestionario</b></div>
-                            <ol>
-                                {% for resultado in resultados %}
-                                <li>
-                                    {{ resultado.pregunta }}
-                                    <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
-                                </li>
-                                {% endfor %}
-                            </ol>
-                        </div>
+                <div class="card ">
+                    <div class="card-body">
+                        <div class="h5"><b>Respuestas al Cuestionario</b></div>
+                        <ol>
+                            {% for resultado in resultados %}
+                            <li>
+                                {{ resultado.pregunta }}
+                                <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
+                            </li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 </div>
             </div>
-        {% else %}
-            <div class="h5">Aún no se ha completado el cuestionario. Desea completarlo?</div><br>
-            <div>
-                <a href="{% url 'procesar_test' test_id %}" type="submit" class="btn btn-primary">
-                    <!-- <i class="fas fa-caret-left"></i> -->
-                    Completar ahora
-                </a>
+        </div>
 
-                <a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-secondary">
-                    <i class="fas fa-caret-left"></i>
-                    Cancelar
-                </a>
+        {% else %}
+        <div class='row justify-content-center align-items-center'>
+            <div class='col-md-6 col-sm-offset-3'>
+                <div class="card shadow my-3">
+                    <div class="card-body">
+
+                        <div class="h5">Aún no se ha completado el cuestionario. Desea completarlo?</div><br>
+                        <div>
+                            <a href="{% url 'procesar_test' test_id %}" type="submit" class="btn btn-primary">
+                                <i class="fas fa-edit"></i>
+                                Completar ahora
+                            </a>
+
+                            <a href="{% url 'test_generar_link' test_id %}" type="submit" class="btn btn-success">
+                                <i class="fas fa-link"></i>
+                                Generar Link
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
+        </div>
         {% endif %}
 
     </div>

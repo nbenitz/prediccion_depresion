@@ -14,7 +14,7 @@ def inicio(request):
 
 
 def about(request):
-    return render(request, "about.html")
+    return render(request, "about.html", {'titulo': 'Acerca de'})
 
 
 def contact(request):

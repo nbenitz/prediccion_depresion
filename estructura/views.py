@@ -193,11 +193,23 @@ def procesar_test(request, test_id):
     return render(request, 'resultado/test.html', {'cuestionario': cuestionario})
 
 
-class TestCompletadoView(TemplateView):
+def generar_link(request, test_id):
+    url_back = reverse('test_completado', args=[test_id])
+    link = request.build_absolute_uri(reverse('procesar_test', args=[test_id]))
+    
+    return render(request, 'resultado/generar_link.html', {
+        'link': link, 
+        'titulo': 'Generar Enlace',
+        'url_back':url_back,
+    })
+
+
+class TestCompletadoView(LoginRequiredMixin, TemplateView):
     template_name = 'resultado/test_completado.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['url_back'] = reverse('leerTest')
         test_id = kwargs['test_id']
 
         test = Test.objects.get(id=test_id)

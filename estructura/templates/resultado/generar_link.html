@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow" style="min-height: calc(100vh - 76px);">
+
+    <div class="card-header py-3">
+        <div class='row'>
+            <div class='col-sm-6 col-sm-offset-3'>
+                <h4 class="h4 mb-0 text-gray-800">Generar Enlace</h4>
+            </div>
+
+            <div align="right" class='col-sm-6 mb-0'>
+                <a href="{{ url_back }}" type="submit" class="btn btn-primary"
+                    style="padding-top: 0.4rem;">
+                    <i class="fas fa-caret-left"></i> Regresar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class='row justify-content-center align-items-center'>
+            <div class='col-md-6 col-sm-offset-3'>
+                <div class="card shadow my-3">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <label for="generatedLink">Enlace generado:</label>
+                            <input type="text" class="form-control" id="generatedLink" value="{{ link }}" readonly>
+                        </div>
+                        <button class="btn btn-primary" onclick="copyToClipboard()">
+                            <i class="fas fa-copy"></i> Copiar al portapapeles
+                        </button>
+
+                        <div class="alert alert-success mt-3" id="successAlert" style="display: none;" role="alert">
+                            Link copiado al portapapeles: <span id="alertLink"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard() {
+        const linkInput = document.getElementById('generatedLink');
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // Para dispositivos móviles
+        document.execCommand('copy');
+
+        const alertBox = document.getElementById('successAlert');
+        const alertLink = document.getElementById('alertLink');
+        alertLink.textContent = linkInput.value;
+        alertBox.style.display = 'block';
+    }
+</script>
+{% endblock %}

@@ -100,10 +100,10 @@ urlpatterns = [
     path('test/crear', TestCrear.as_view(template_name="test/crear.html",
                                          extra_context={'titulo': 'Generar Test'}), name='CrearTest'),
 
-    path('test/<int:test_id>/procesar',
-         views.procesar_test, name='procesar_test'),
+    path('test/<int:test_id>/procesar', views.procesar_test, name='procesar_test'),
 
-    path('test/completado/<int:test_id>',
-         views.TestCompletadoView.as_view(), name='test_completado'),
+    path('test/<int:test_id>/generar_link', views.generar_link, name='test_generar_link'),
+
+    path('test/completado/<int:test_id>', views.TestCompletadoView.as_view(), name='test_completado'),
 
 ]
