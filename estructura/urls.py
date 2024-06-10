@@ -7,6 +7,7 @@ from .views import PreguntaCrear, PreguntaActualizar, PreguntaEliminar
 from .views import ObjetoListado, ObjetoDetalle
 from .views import TrastornoCrear, TrastornoActualizar, TrastornoEliminar
 from .views import CuestionarioCrear, CuestionarioActualizar, CuestionarioEliminar
+from .views import ReglaCrear, ReglaActualizar, ReglaEliminar
 from .views import TestCrear, TestActualizar, TestEliminar, TestCompletadoView
 from . import views
 
@@ -83,14 +84,31 @@ urlpatterns = [
                                                 extra_context={'titulo': 'Cuestionario',
                                                                'plural': 'Cuestionarios'}), name='leerCuestionario'),
 
-    path('cuestionario/crear', CuestionarioCrear.as_view(template_name="crud/crear_editar.html",
-                                                         extra_context={'titulo': 'Crear Cuestionario'}), name='CrearCuestionario'),
+    path('cuestionario/crear', CuestionarioCrear.as_view(
+        template_name="cuestionario/crear_editar.html",
+        extra_context={'titulo': 'Crear Cuestionario'}
+    ), name='CrearCuestionario'),
 
-    path('cuestionario/editar/<str:pk>', CuestionarioActualizar.as_view(template_name="crud/crear_editar.html",
-                                                                        extra_context={'titulo': 'Editar Cuestionario'}), name='actualizarCuestionario'),
+    path('cuestionario/editar/<str:pk>', CuestionarioActualizar.as_view(
+        template_name="cuestionario/crear_editar.html",
+        extra_context={'titulo': 'Editar Cuestionario'}
+    ), name='actualizarCuestionario'),
 
-    path('cuestionario/eliminar/<str:pk>',
-         CuestionarioEliminar.as_view(), name='eliminarCuestionario'),
+    path('cuestionario/eliminar/<str:pk>', CuestionarioEliminar.as_view(), name='eliminarCuestionario'),
+    # ----------------------------------- Regla URLs -----------------------------------------------------
+    path('regla/', ObjetoListado.as_view(
+        model=models.Regla,
+        template_name="regla/index.html",
+        extra_context={
+            'titulo': 'Regla',
+            'plural': 'Reglas'
+        }
+    ), name='leerRegla'),
+
+    path('regla/crear', ReglaCrear.as_view(), name='CrearRegla'),
+    path('regla/editar/<str:pk>', ReglaActualizar.as_view(), name='actualizarRegla'),
+    path('regla/eliminar/<str:pk>', ReglaEliminar.as_view(), name='eliminarRegla'),
+    path('regla/ajax/cargar-preguntas/', views.cargar_preguntas, name='cargar_preguntas'),
     # ----------------------------------- Test URLs -----------------------------------------------------
     path('test/', ObjetoListado.as_view(model=models.Test,
                                         template_name="test/index.html",

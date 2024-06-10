@@ -1,0 +1,76 @@
+{% extends "crud/card-md-10.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block card %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">
+        <i class="fas fa-save"></i>
+        Aceptar
+    </button>
+    <a href="{{ request.META.HTTP_REFERER }}" type="submit" class="btn btn-secondary">
+        <i class="fas fa-caret-left"></i>
+        Cancelar
+    </a>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('select[name="respuestas_necesarias"]').bootstrapDualListbox({
+            nonSelectedListLabel: 'Preguntas Disponibles en el Cuestionario',
+            selectedListLabel: 'Preguntas Seleccionadas para la Regla',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false,
+            nonSelectedFilter: '',
+            filterTextClear: 'mostrar todo',
+            filterPlaceHolder: 'filtrar',
+            moveAllLabel: 'Mover todo',
+            removeAllLabel: 'Remover todo',
+            infoText: 'Mostrando todos {0}',
+            infoTextFiltered: '<span class="label label-warning">Filtrado</span> {0} de {1}',
+            infoTextEmpty: 'Lista vacía',
+            //height: 350,
+            //selectorMinimalHeight: 200
+        }).addClass('custom-duallistbox');
+
+
+        // Manejar cambio en el selector de cuestionario
+        $('select[name="cuestionario"]').on('change', function () {
+            var cuestionarioId = $(this).val();
+            var reglaId = "{{ form.instance.id|default:'' }}";
+            if (cuestionarioId) {
+                $.ajax({
+                    url: '{% url "cargar_preguntas" %}',
+                    data: {
+                        'cuestionario_id': cuestionarioId,
+                        'regla_id': reglaId
+                    },
+                    success: function (data) {
+                        var $preguntasSelect = $('select[name="respuestas_necesarias"]');
+                        $preguntasSelect.empty();
+                        $.each(data.preguntas, function (index, pregunta) {
+                            $preguntasSelect.append($('<option>', {
+                                value: pregunta.id,
+                                text: pregunta.pregunta
+                            }));
+                        });
+
+                        if (data.preguntas_seleccionadas) {
+                            $.each(data.preguntas_seleccionadas, function (index, pregunta) {
+                                $preguntasSelect.find('option[value="' + pregunta.id + '"]').prop('selected', true);
+                            });
+                        }
+
+                        $preguntasSelect.bootstrapDualListbox('refresh', true);
+                    }
+                });
+            } else {
+                $('select[name="respuestas_necesarias"]').empty();
+                $('select[name="respuestas_necesarias"]').bootstrapDualListbox('refresh', true);
+            }
+        });
+    });
+</script>
+{% endblock %}

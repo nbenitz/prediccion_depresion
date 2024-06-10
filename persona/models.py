@@ -18,6 +18,9 @@ class User(AbstractUser):
     direccion = models.CharField("Dirección", max_length=50, blank=True, null=True)
     signup_confirmation = models.BooleanField(default=False)
 
+    class Meta:
+        db_table = 'user'
+
     def __str__(self):
         return self.first_name + " " + self.last_name
  
@@ -31,6 +34,9 @@ class Paciente(models.Model):
     direccion = models.CharField("Dirección", max_length=50, blank=True, null=True)
     email = models.EmailField(unique=True)
 
+    class Meta:
+        db_table = 'paciente'
+
     def __str__(self):
         return self.apellido + ", " + self.nombre
     
@@ -43,6 +49,9 @@ class Doctor(models.Model):
         related_name='doctor'
     )
     ci = models.CharField(max_length=15, unique=True) 
+
+    class Meta:
+        db_table = 'doctor'
         
     def __str__(self):
         return self.user.last_name + ", " + self.user.first_name
