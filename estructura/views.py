@@ -219,8 +219,6 @@ class TestListar(LoginRequiredMixin, ListView):
         else:
             return None
 
-        
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(self.extra_context)
@@ -234,7 +232,8 @@ class TestCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = 'Test Creado Correctamente!' 
  
     def get_success_url(self):        
-        return reverse('procesar_test', args=[self.object.id])
+        return reverse('test_completado', args=[self.object.id])
+
 
 
 class TestActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView): 
@@ -245,7 +244,8 @@ class TestActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leerTest')  
 
-   
+
+
 class TestEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView): 
     model = Test 
     form = Test
