@@ -54,3 +54,13 @@ select option,
 .filter-option-inner-inner {
     color: #858796;
 }
+
+.box1 label,
+.box2 label {
+    font-style: italic;
+}
+
+.asteriskField {
+    color: red !important;
+    padding-left: .2rem;
+}

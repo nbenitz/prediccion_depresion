@@ -21,7 +21,7 @@ class TestForm(forms.ModelForm):
         super(TestForm, self).__init__(*args, **kwargs)
 
         self.fields['paciente'].empty_label = "Seleccione un Paciente"
-        self.fields['doctor'].empty_label = "Seleccione un Doctor"
+        self.fields['doctor'].empty_label = "Seleccione un Psicólogo"
         self.fields['cuestionario'].empty_label = "Seleccione un Cuestionario"
 
 

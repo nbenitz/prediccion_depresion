@@ -1,0 +1,24 @@
+{% extends "crud/card.html" %}
+
+{% block card %}
+<!-- <p><strong>ID: </strong>{{object.id}}</p> -->
+<p><strong>Nombre del Cuestionario: </strong>{{object.nombre}}</p>
+<p><strong>Trastorno: </strong>{{object.trastorno}}</p>
+<p><strong>Preguntas: </strong>
+	<ul>
+	  {% for pregunta in object.preguntas.all %}
+		<li>{{ pregunta }}</li>
+	  {% endfor %}
+	</ul>
+  </p>
+
+<div class='row justify-content-center'>
+
+	<a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary">
+		<i class="fas fa-caret-left"></i>
+		Volver
+	</a>&nbsp;
+
+</div>
+
+{% endblock %}

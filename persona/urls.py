@@ -33,8 +33,8 @@ urlpatterns = [
         template_name="doctor/index.html",
         model=get_user_model(),
         extra_context={
-            'titulo': 'Doctor',
-            'plural': 'Doctores'
+            'titulo': 'Psicólogo',
+            'plural': 'Psicólogos'
         }), name='leerDoctor'
     ),
     path('doctor/detalle/<str:pk>', ObjetoDetalle.as_view(

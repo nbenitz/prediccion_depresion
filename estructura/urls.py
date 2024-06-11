@@ -79,10 +79,20 @@ urlpatterns = [
     path('pregunta/eliminar/<str:pk>', PreguntaEliminar.as_view(), name='eliminarPregunta'),
 
     # ----------------------------------- Cuestionario URLs -----------------------------------------------------
-    path('cuestionario/', ObjetoListado.as_view(model=models.Cuestionario,
-                                                template_name="cuestionario/index.html",
-                                                extra_context={'titulo': 'Cuestionario',
-                                                               'plural': 'Cuestionarios'}), name='leerCuestionario'),
+    path('cuestionario/', ObjetoListado.as_view(
+        model=models.Cuestionario,
+        template_name="cuestionario/index.html",
+        extra_context={
+            'titulo': 'Cuestionario',
+            'plural': 'Cuestionarios'
+        }
+    ), name='leerCuestionario'),
+
+    path('cuestionario/detalle/<str:pk>', ObjetoDetalle.as_view(
+        model=models.Cuestionario,
+        template_name="cuestionario/detalles.html",
+        extra_context={'titulo': 'Cuestionario'},
+    ), name='detallesCuestionario'),
 
     path('cuestionario/crear', CuestionarioCrear.as_view(
         template_name="cuestionario/crear_editar.html",
@@ -104,6 +114,12 @@ urlpatterns = [
             'plural': 'Reglas'
         }
     ), name='leerRegla'),
+
+    path('regla/detalle/<str:pk>', ObjetoDetalle.as_view(
+        model=models.Regla,
+        template_name="regla/detalles.html",
+        extra_context={'titulo': 'Regla'},
+    ), name='detallesRegla'),
 
     path('regla/crear', ReglaCrear.as_view(), name='CrearRegla'),
     path('regla/editar/<str:pk>', ReglaActualizar.as_view(), name='actualizarRegla'),
