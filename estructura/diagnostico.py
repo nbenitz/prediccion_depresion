@@ -1,5 +1,18 @@
 from .models import Regla
 
+
+
+def determine_depression_type(answers):
+    all_reglas = Regla.objects.prefetch_related('respuestas_necesarias', 'escala')
+
+    for regla in all_reglas:
+        rule_answers = [pregunta.id for pregunta in regla.respuestas_necesarias.all()]
+        if set(rule_answers).issubset(answers):
+            return regla.escala.id
+
+    return None
+
+
 '''
 Preguntas
 1. ¿Está deprimido por alguna situación de su vida?
@@ -38,7 +51,6 @@ Preguntas
 34. ¿Escucha voces en la cabeza?
 35. ¿Es muy impulsivo (a)?
 36. ¿Es muy nervioso (a)?
-
 '''
 # el valor de cada regla es la lista de preguntas que tuvieron respuestas afirmativas
 rules = {
@@ -106,18 +118,6 @@ def determine_depression_type2(answers):
             return depression_type
     
     return None
-
-
-def determine_depression_type(answers):
-    all_reglas = Regla.objects.prefetch_related('respuestas_necesarias', 'escala')
-
-    for regla in all_reglas:
-        rule_answers = [pregunta.id for pregunta in regla.respuestas_necesarias.all()]
-        if set(rule_answers).issubset(answers):
-            return regla.escala.id
-
-    return None
-
 
 '''
 answers = [7, 9, 23, 24, 25]

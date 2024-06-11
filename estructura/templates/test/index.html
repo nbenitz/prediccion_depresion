@@ -7,6 +7,7 @@
 		<th>Paciente</th>
 		<th>Psicólogo</th>
 		<th>Cuestionario</th>
+		<th>Resultado</th>
 		<th style="text-align: center; width: 5%;">Resultado</th>
 	</tr>
 </thead>
@@ -19,6 +20,7 @@
 			<td>{{ Item.paciente }}</td>
 			<td>{{ Item.doctor }}</td>
 			<td>{{ Item.cuestionario }}</td>
+			<td>{{ Item.diagnostico|default:'<div class="text-danger">Aún no se ha completado el Cuestionario</div>' }}</td>
 			<td style="text-align: center; width: 5%;">
 				<form method="POST" action="eliminar/{{Item.id}}">
 					{% csrf_token %}

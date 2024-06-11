@@ -9,6 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.db.models import Prefetch
 from .diagnostico import determine_depression_type
 from .forms import TestForm, ReglaForm
 
@@ -185,6 +186,48 @@ class ReglaEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     
 
 # ========================== Test ===================================================================
+class TestListar(LoginRequiredMixin, ListView):
+    model = Test
+    template_name = "test/index.html"
+    extra_context = {"titulo": "Test", "plural": "Tests"}
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Prefetch results to avoid N+1 query problem
+        queryset = queryset.prefetch_related(
+            Prefetch('resultado', queryset=Resultado.objects.all())
+        )
+        
+        # Añadir un campo `diagnostico` a cada instancia en el queryset
+        for test in queryset:
+            test.diagnostico = self.get_diagnostico(test)
+        
+        return queryset
+
+    def get_diagnostico(self, test):
+        resultados = Resultado.objects.filter(test=test)
+        if resultados:
+            answers_true = [resultado.pregunta.id for resultado in resultados if resultado.respuesta]
+            escala_id = determine_depression_type(answers_true)
+
+            if escala_id:
+                escala = Escala.objects.get(id=escala_id)
+                return escala
+            else:
+                return 'No se determina ningún tipo de depresión'
+        else:
+            return None
+
+        
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.extra_context)
+        return context
+
+
+
 class TestCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
     model = Test 
     form_class = TestForm  
@@ -267,36 +310,7 @@ class TestCompletadoView(LoginRequiredMixin, TemplateView):
             context['resultados'] = None
             context['test_id'] = test_id
             return context
-        
-
-
-class TestCompletadoView2(LoginRequiredMixin, TemplateView):
-    template_name = 'resultado/test_completado.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['url_back'] = reverse('leerTest')
-        test_id = kwargs['test_id']
-
-        test = Test.objects.get(id=test_id)
-        resultados = Resultado.objects.filter(test=test)
-
-        if resultados:
-            answers_true = [resultado.pregunta.nro_item for resultado in resultados if resultado.respuesta]
-            depression_type = determine_depression_type(answers_true)
-
-            escala = None
-            if depression_type:
-                escala = Escala.objects.get(id=depression_type)
-
-            context['resultados'] = resultados
-            context['tipo_depresion'] = escala
-            return context
-        else:
-            context['resultados'] = None
-            context['test_id'] = test_id
-            return context
-
+    
 
 # ========================== Ajax ===================================================================
 def cargar_preguntas(request):
