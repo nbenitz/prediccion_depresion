@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     # mis apps
     'persona',
     'estructura',
+    'reporte',
 ]
 
 MIDDLEWARE = [

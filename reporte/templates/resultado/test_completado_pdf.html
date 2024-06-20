@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados del Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .card-header {
+            background: #f8f9fa;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.25rem;
+        }
+
+        .card-body {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>{% if resultados %}Resultados del Test{% else %}Completar el Cuestionario{% endif %}</h4>
+            </div>
+            <div class="card-body">
+                {% if resultados %}
+                <div class="card">
+                    <div class="card-header">
+                        <b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b>
+                    </div>
+                    <div class="card-body">
+                        {% if tipo_depresion %}
+                        <p>{{ tipo_depresion.descripcion|linebreaks }}</p>
+                        <div class="card">
+                            <div class="card-body">
+                                <b>Características</b>
+                                <p>{{ tipo_depresion.caracteristicas|linebreaks }}</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <b>Tratamientos</b>
+                                <p>{{ tipo_depresion.tratamientos|linebreaks }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="card">
+                            <div class="card-body">
+                                <b>Respuestas al Cuestionario</b>
+                                <ol>
+                                    {% for resultado in resultados %}
+                                    <li>
+                                        <b>{{ resultado.pregunta }}</b>
+                                        <p>{{ resultado.respuesta|yesno:"Si,No" }}</p>
+                                    </li>
+                                    {% endfor %}
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <p>No hay resultados disponibles. Por favor, complete el cuestionario.</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

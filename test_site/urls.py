@@ -31,6 +31,7 @@ urlpatterns = [
 
     path('', include('persona.urls')),
     path('', include('estructura.urls')),
+    path('', include('reporte.urls')),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,37 @@
+{% extends "crud/list.html" %}
+
+{% block table %}
+<thead>
+	<tr>
+		<th>Fecha</th>
+		<th>Paciente</th>
+		<th>Psicólogo</th>
+		<th>Cuestionario</th>
+		<th>Resultado</th>
+		<th style="text-align: center; width: 5%;">Resultado</th>
+	</tr>
+</thead>
+
+<tbody>
+	<!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'cliente' y los listamos -->
+	{% for Item in object_list %}
+		<tr>
+			<td>{{ Item.fecha }}</td>
+			<td>{{ Item.paciente }}</td>
+			<td>{{ Item.doctor }}</td>
+			<td>{{ Item.cuestionario }}</td>
+			<td>{{ Item.diagnostico|default:'<div class="text-danger">Aún no se ha completado el Cuestionario</div>' }}</td>
+			<td style="text-align: center; width: 5%;">
+				<form method="POST" action="eliminar/{{Item.id}}">
+					{% csrf_token %}
+					<!--<div class="btn-group">-->
+						<a href="completado/{{Item.id}}" title="Ver" class="btn btn-success">
+							<i class="far fa-eye"></i></i></a>
+					<!--</div>-->
+				</form>
+			</td>
+		</tr>
+	{% endfor %}
+</tbody>
+
+{% endblock %}
