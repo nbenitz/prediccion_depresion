@@ -51,7 +51,7 @@
                         <ol>
                             {% for resultado in resultados %}
                             <li>
-                                {{ resultado.pregunta }}
+                                {{ resultado.pregunta.pregunta }}
                                 <p class="mb-1">{{ resultado.respuesta|yesno:"Si,No" }}</p>
                             </li>
                             {% endfor %}

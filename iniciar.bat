@@ -1,3 +1,3 @@
 @echo off
-cmd /k "cd /d c:\Users\Nestor\dev\test_site\env\scripts & activate & cd /d C:\Users\Nestor\devz\test_site & python manage.py runserver"
+cmd /k "cd env\scripts & activate & cd ..\.. & python manage.py runserver"
 pause

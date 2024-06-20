@@ -38,7 +38,7 @@ class Paciente(models.Model):
         db_table = 'paciente'
 
     def __str__(self):
-        return self.apellido + ", " + self.nombre
+        return self.nombre + " " + self.apellido
     
   
 class Doctor(models.Model):
@@ -54,7 +54,7 @@ class Doctor(models.Model):
         db_table = 'doctor'
         
     def __str__(self):
-        return self.user.last_name + ", " + self.user.first_name
+        return self.user.first_name + " " + self.user.last_name
 
 
     

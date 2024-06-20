@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados del Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .header,
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .section h4 {
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .section p,
+        .section li {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resultados del Test</h1>
+        </div>
+        <div class="section">
+            <h4>Información del Test</h4>
+            <p><b>Nombre del Cuestionario:</b> {{ resultados.0.test.cuestionario }}</p>
+            <p><b>Fecha:</b> {{ resultados.0.test.fecha }}</p>
+            <p><b>Médico:</b> {{ resultados.0.test.doctor }}</p>
+            <p><b>Paciente:</b> {{ resultados.0.test.paciente }}</p>
+        </div>
+        {% if resultados %}
+        <div class="section">
+            <h4>Diagnóstico</h4>
+            <p><b>{{ tipo_depresion.tipo|default:'No se determina ningún tipo de depresión' }}</b></p>
+            {% if tipo_depresion %}
+            <p>{{ tipo_depresion.descripcion|linebreaks }}</p>
+            <div class="section">
+                <h4>Características</h4>
+                <p>{{ tipo_depresion.caracteristicas|linebreaks }}</p>
+            </div>
+            <div class="section">
+                <h4>Tratamientos</h4>
+                <p>{{ tipo_depresion.tratamientos|linebreaks }}</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="section">
+            <h4>Respuestas al Cuestionario</h4>
+            <ol>
+                {% for resultado in resultados %}
+                <li>
+                    <b>{{ resultado.pregunta.pregunta }}</b>
+                    <p>{{ resultado.respuesta|yesno:"Si,No" }}</p>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% else %}
+        <div class="section">
+            <p>No hay resultados disponibles. Por favor, complete el cuestionario.</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
