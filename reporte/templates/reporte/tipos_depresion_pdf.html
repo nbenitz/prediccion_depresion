@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tipos de Depresión Diagnosticados</title>
+    <style>
+        /* Estilos para el documento */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tipos de Depresión Diagnosticados</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de Depresión</th>
+                <th>Cantidad de Diagnosticados</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipo, cantidad in tipos_depresion.items %}
+            <tr>
+                <td>{{ tipo }}</td>
+                <td>{{ cantidad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

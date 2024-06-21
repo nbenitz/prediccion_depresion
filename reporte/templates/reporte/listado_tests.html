@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Tests</title>
+    <style>
+        /* Aquí puedes incluir estilos para la tabla y el documento en general */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Listado de Tests</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Paciente</th>
+                <th>Psicólogo</th>
+                <th>Cuestionario</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td>{{ test.fecha }}</td>
+                    <td>{{ test.paciente }}</td>
+                    <td>{{ test.doctor }}</td>
+                    <td>{{ test.cuestionario }}</td>
+                    <td>{{ test.diagnostico|default:'Aún no se ha completado el Cuestionario' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
