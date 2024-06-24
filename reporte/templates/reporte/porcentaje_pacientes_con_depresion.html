@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tipos de Depresión Diagnosticados</title>
+    <style>
+        /* Estilos para el documento */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tipos de Depresión Diagnosticados</h1>
+    
+    <!-- Cuadro 1: Porcentaje de pacientes con depresión vs sin depresión -->
+    <h2>Porcentaje de Pacientes con Depresión vs Sin Depresión</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Con Depresión</td>
+                <td>{{ porcentaje_depresion|floatformat:2 }}%</td>
+            </tr>
+            <tr>
+                <td>Sin Depresión</td>
+                <td>{{ porcentaje_no_depresion|floatformat:2 }}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Cuadro 2: Porcentaje de pacientes diagnosticados con depresión por tipo de depresión -->
+    <h2>Porcentaje de Pacientes con Depresión por Tipo de Diagnóstico</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de Depresión</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipo, porcentaje in porcentaje_tipos_depresion.items %}
+            <tr>
+                <td>{{ tipo }}</td>
+                <td>{{ porcentaje|floatformat:2 }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

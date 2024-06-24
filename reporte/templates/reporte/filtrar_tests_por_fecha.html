@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-4">Filtrar Tests por Fecha</h1>
+
+    <form method="post" class="mt-4">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
+    {% if tests %}
+      <h2 class="mt-4">Resultados</h2>
+      <ul class="list-group">
+        {% for test in tests %}
+          <li class="list-group-item">{{ test.nombre }} - {{ test.fecha }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}

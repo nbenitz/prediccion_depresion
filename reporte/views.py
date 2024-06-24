@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 
-
+from collections import defaultdict
 from django.core import management
 from django.views.generic import View, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,6 +12,8 @@ from django.db.models import Prefetch
 from weasyprint import HTML, CSS
 from estructura.models import Test, Resultado, Escala
 from estructura.diagnostico import determine_depression_type
+#importar formulario
+from .forms import DateRangeForm
 
 
 
@@ -76,6 +78,27 @@ class TestPDFView(LoginRequiredMixin, View):
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="test_{test_id}_resultados.pdf"'
         return response
+
+
+# Vista para mostrar pagina para filtrar tests por rango de fechas
+class FiltrarTestsPorFechaView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = DateRangeForm()
+        context = {'form': form}
+        return render(request, 'reporte/filtrar_tests_por_fecha.html', context)
+
+    def post(self, request):
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            tests = Test.objects.filter(fecha__range=[start_date, end_date])
+            context = {'form': form, 'tests': tests}
+            return render(request, 'reporte/filtrar_tests_por_fecha.html', context)
+        else:
+            context = {'form': form}
+            return render(request, 'reporte/filtrar_tests_por_fecha.html', context)
+
 
 
 
@@ -162,6 +185,56 @@ class TiposDepresionDiagnosticadosPDFView(LoginRequiredMixin, View):
         response = HttpResponse(pdf_file, content_type='application/pdf')
         response['Content-Disposition'] = 'inline; filename="tipos_depresion_diagnosticados.pdf"'
         return response
+
+
+
+
+# Vista de reporte para mostrar porcentaje de pacientes con depresión usando la clase View
+class PorcentajePacientesConDepresionView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        tests = Test.objects.all().prefetch_related('resultado')
+        tipos_depresion = defaultdict(int)
+        total_tests = 0
+        total_depresion = 0
+
+        # Lógica para determinar y contar tipos de depresión
+        for test in tests:
+            resultados = Resultado.objects.filter(test=test)
+            if resultados:
+                total_tests += 1
+                answers_true = [resultado.pregunta.id for resultado in resultados if resultado.respuesta]
+                tipo_id = determine_depression_type(answers_true)
+                tipo = Escala.objects.get(id=tipo_id) if tipo_id else 'No se determina tipo de depresión'
+                
+                if tipo and tipo != 'No se determina tipo de depresión':
+                    tipos_depresion[tipo] += 1
+                    total_depresion += 1
+
+        # Calcular porcentajes
+        porcentaje_tipos_depresion = {tipo: (cantidad / total_depresion) * 100 for tipo, cantidad in tipos_depresion.items()}
+        porcentaje_depresion = (total_depresion / total_tests) * 100
+        porcentaje_no_depresion = 100 - porcentaje_depresion
+
+        context = {
+            'tipos_depresion': tipos_depresion,
+            'porcentaje_tipos_depresion': porcentaje_tipos_depresion,
+            'porcentaje_depresion': porcentaje_depresion,
+            'porcentaje_no_depresion': porcentaje_no_depresion
+        }
+        html_string = render_to_string('reporte/porcentaje_pacientes_con_depresion.html', context)
+
+        # Configurar HTML y CSS para WeasyPrint
+        html = HTML(string=html_string)
+        css = CSS(string='@page { size: A4 landscape; margin: 1cm; }')  # Configurar orientación horizontal
+        
+        # Generar el PDF
+        pdf_file = html.write_pdf(stylesheets=[css])
+
+        # Devolver el PDF como respuesta HTTP
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="tipos_depresion_diagnosticados.pdf"'
+        return response
+
     
 
     
