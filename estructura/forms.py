@@ -1,5 +1,5 @@
 from django import forms
-from .models import Test, Regla, Cuestionario, Pregunta
+from .models import Test, Regla, Cuestionario, Pregunta, Paciente, Doctor
 
 
 
@@ -21,7 +21,9 @@ class TestForm(forms.ModelForm):
         super(TestForm, self).__init__(*args, **kwargs)
 
         self.fields['paciente'].empty_label = "Seleccione un Paciente"
+        self.fields['paciente'].queryset = Paciente.objects.filter(estado=True)
         self.fields['doctor'].empty_label = "Seleccione un Psicólogo"
+        self.fields['doctor'].queryset = Doctor.objects.filter(estado=True)
         self.fields['cuestionario'].empty_label = "Seleccione un Cuestionario"
 
 

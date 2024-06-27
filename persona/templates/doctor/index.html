@@ -8,6 +8,7 @@
 			<th>Nombre</th>
 			<th>Telefono</th>
 			<th>Direccion</th>
+			<th>Estado</th>
 			<th style="text-align: center; width: 9%;">Acciones</th>
 		</tr>
 	</thead>
@@ -19,15 +20,16 @@
 				<td>{{ user.first_name }} {{user.last_name}}</td>
 				<td>{{ user.telefono }}</td>
 				<td>{{ user.direccion|default:"" }}</td>
+				<td>{{ user.doctor.estado|yesno:'Activo,Inactivo' }}</td>
 				<td style="text-align: center; width: 9%;">
-					<form method="POST" action="eliminar/{{user.id}}">
+					<form method="POST" action="inactivar/{{user.id}}">
 						{% csrf_token %}
 						<div class="btn-group">
 							<a href="detalle/{{user.id}}" title="Ver" class="btn btn-success">
 								<i class="far fa-eye"></i></i></a>
 							<a href="editar/{{user.id}}" title="Editar" class="btn btn-primary">
 								<i class="far fa-edit"></i></i></a>
-							<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
+							<button class="btn btn-danger" onclick="return inactivar();" title="Inactivar">
 								<i class="far fa-trash-alt"></i></button>
 						</div>
 					</form>

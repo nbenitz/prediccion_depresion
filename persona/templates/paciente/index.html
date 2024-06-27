@@ -8,6 +8,7 @@
 							<th>Nombre</th>
 							<th>Telefono</th>
 							<th>Direccion</th>
+							<th>Estado</th>
 							<th style="text-align: center; width: 9%;">Acciones</th>
 						</tr>
 					</thead>
@@ -19,9 +20,10 @@
 								<td>{{ object.nombre }} {{object.apellido}}</td>
 								<td>{{ object.telefono|default:'' }}</td>
 								<td>{{ object.direccion|default:'' }}</td>
+								<td>{{ object.estado|yesno:'Activo,Inactivo' }}</td>
 								<td style="text-align: center; width: 9%;">
 									<!-- Usaremos un formulario que realizara la tarea de eliminar un registro o postre desde la misma tabla HTML -->
-									<form method="POST" action="eliminar/{{object.id}}">
+									<form method="POST" action="inactivar/{{object.id}}">
 										{% csrf_token %}
 										<div class="btn-group">
 											<!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o postres -->
@@ -29,7 +31,7 @@
 												<i class="far fa-eye"></i></a>
 											<a href="editar/{{object.id}}" title="Editar" class="btn btn-primary">
 												<i class="far fa-edit"></i></a>
-											<button class="btn btn-danger" onclick="return eliminar();" title="Eliminar">
+											<button class="btn btn-danger" onclick="return inactivar();" title="Inactivar">
 												<i class="far fa-trash-alt"></i></button>
 										</div>
 									</form>

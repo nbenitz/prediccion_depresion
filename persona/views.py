@@ -15,7 +15,7 @@ from persona.tokens import account_activation_token
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin 
-from .models import Paciente
+from .models import Paciente, Doctor
 from django.urls import reverse
 
 
@@ -48,20 +48,15 @@ class PacienteActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leerPaciente') 
 
-   
-class PacienteEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView): 
-    model = Paciente 
-    form = Paciente
-    fields = "__all__"     
- 
-    def get_success_url(self): 
-        success_message = 'Paciente Eliminado Correctamente !' 
-        messages.success (self.request, (success_message))       
-        return reverse('leerPaciente')
+
+def inactivar_paciente(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    paciente.estado = False
+    paciente.save()
+    return redirect('leerPaciente')  
     
     
-    
-#=================================== EMPLEADO ===========================================  
+#=================================== DOCTOR ===========================================  
     
 def create_doctor(request):
     
@@ -114,7 +109,13 @@ def edit_doctor(request, pk):
         'titulo': 'Editar Doctor',
     })
 
-        
+
+def inactivar_doctor(request, pk):
+    doctor = Doctor.objects.get(id=pk)
+    doctor.estado = False
+    doctor.save()
+    return redirect('leerDoctor')
+
 #=================================== USUARIO =========================================== 
 def activate(request, uidb64, token):
     try:

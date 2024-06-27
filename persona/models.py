@@ -33,6 +33,7 @@ class Paciente(models.Model):
     telefono = models.CharField("Teléfono", max_length=15, blank=True, null=True)
     direccion = models.CharField("Dirección", max_length=50, blank=True, null=True)
     email = models.EmailField(unique=True)
+    estado = models.BooleanField(default=True, verbose_name="Activo")
 
     class Meta:
         db_table = 'paciente'
@@ -49,6 +50,7 @@ class Doctor(models.Model):
         related_name='doctor'
     )
     ci = models.CharField(max_length=15, unique=True) 
+    estado = models.BooleanField(default=True, verbose_name="Activo")
 
     class Meta:
         db_table = 'doctor'
