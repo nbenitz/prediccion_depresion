@@ -57,16 +57,39 @@ class TrastornoEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
 #=================================== TipoDepresion ===========================================    
 
-class TipoDepresionCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
-    model = Escala  # Llamamos a la clase 'TipoDepresion' que se encuentra en nuestro archivo 'models.py'
-    form = Escala  # Definimos nuestro formulario con el nombre de la clase o modelo 'Habitacion'
-    fields = "__all__"  # Le decimos a Django que muestre todos los campos de la tabla 'Habitacion' de nuestra Base de Datos 
-    success_message = 'Tipo de Depresión Creada Correctamente!'  # Mostramos este Mensaje luego de Crear un Postre
- 
-    # Redireccionamos a la pagina principal luego de crear un registro o postre
-    def get_success_url(self):        
-        return reverse('leerTipoDepresion')  # Redireccionamos a la vista principal 'leer'
+class TipoDepresionListar(LoginRequiredMixin, ListView): 
+    model = Escala
+    form = Escala
+    fields = "__all__" 
+    template_name="escala/index.html"
+
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        print('query:', query)
+        if query:
+            return Escala.objects.filter(tipo__icontains=query)
+        else:
+            return Escala.objects.all()
+        
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get("q")
+        return context
     
+    
+
+class TipoDepresionCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
+    model = Escala
+    form = Escala
+    fields = "__all__" 
+    success_message = 'Tipo de Depresión Creada Correctamente!'
+ 
+    def get_success_url(self):        
+        return reverse('leerTipoDepresion')
+    
+
  
 class TipoDepresionActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView): 
     model = Escala  

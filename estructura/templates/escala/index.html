@@ -30,43 +30,57 @@
 	</div>
 </div>
 
-<!-- Content Row -->
-
-{% if object_list %}
-
-	{% for object in object_list %}
-	<div class="row">
-		<div class="col-sm-12 mb-2">
-			<div class="card h-100 py-1 mx-3">
-				<div class="card-body">
-					<div class="row align-items-center">
-
-						<aside class="col-md-11">
-							<div class="info-main">
-								<div class="h5 title"><strong>{{ object.tipo }}</strong></div>
-								<p>{{object.descripcion|linebreaks}}</p>
-							</div> 
-						</aside>
-
-						<aside class="col-sm-1">
-							<div class="info-aside">
-								<form method="POST" action="eliminar/{{object.id}}">
-									{% csrf_token %}
-									<a href="editar/{{object.id}}" title="Editar"
-										class="btn btn-primary btn-block">
-										<i class="far fa-edit"></i>&nbsp;Editar</a>
-									<button class="btn btn-danger btn-block" onclick="return eliminar();" title="Eliminar">
-										<i class="far fa-trash-alt"></i>&nbsp;Eliminar</button>
-								</form>
-							</div> 
-						</aside> 
-					</div>
+<!-- Search -->
+<form action="" method="get">
+	<div class="row mx-0 mt-2">
+		<div class="col-md-4 mx-3 px-0">
+			<div class="input-group mb-3">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit">
+						<i class="fas fa-search"></i>
+					</button>
 				</div>
-				
+				<input class="form-control" type="text" name="q" placeholder="Buscar..." value="{{ request.GET.q }}">
 			</div>
 		</div>
 	</div>
-	{% endfor %}
+</form>
+
+<!-- Content Row -->
+{% if object_list %}
+
+{% for object in object_list %}
+<div class="row">
+	<div class="col-md-12 mb-2">
+		<div class="card h-100 py-1 mx-3">
+			<div class="card-body">
+				<div class="row align-items-center">
+
+					<aside class="col-md-9">
+						<div class="info-main">
+							<div class="h5 title"><strong>{{ object.tipo }}</strong></div>
+							<p>{{object.descripcion|linebreaks}}</p>
+						</div>
+					</aside>
+
+					<aside class="col-md-3">
+						<div class="info-aside">
+							<form method="POST" action="eliminar/{{object.id}}">
+								{% csrf_token %}
+								<a href="editar/{{object.id}}" title="Editar" class="btn btn-primary btn-block">
+									<i class="far fa-edit"></i>&nbsp;Editar</a>
+								<button class="btn btn-danger btn-block" onclick="return eliminar();" title="Eliminar">
+									<i class="far fa-trash-alt"></i>&nbsp;Eliminar</button>
+							</form>
+						</div>
+					</aside>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endfor %}
 
 {% else %}
 <div class="card shadow mb-4">

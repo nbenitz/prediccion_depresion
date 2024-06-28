@@ -11,6 +11,7 @@ from .views import ReglaCrear, ReglaActualizar, ReglaEliminar
 from .views import (
     TestListar,
     TestCrear,
+    TipoDepresionListar,
     TestActualizar,
     TestEliminar,
     TestCompletadoView,
@@ -61,9 +62,7 @@ urlpatterns = [
     # url de Tipo de Depresión
     path(
         "escala/",
-        ObjetoListado.as_view(
-            model=models.Escala,
-            template_name="escala/index.html",
+        TipoDepresionListar.as_view(
             extra_context={
                 "titulo": "Tipo de Depresión",
                 "plural": "Tipos de Depresión",
