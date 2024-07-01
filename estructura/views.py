@@ -78,7 +78,7 @@ class TipoDepresionListar(LoginRequiredMixin, ListView):
         context['q'] = self.request.GET.get("q")
         return context
     
-    
+
 
 class TipoDepresionCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
     model = Escala
@@ -254,6 +254,11 @@ class TestCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = TestForm  
     success_message = 'Test Creado Correctamente!' 
  
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_success_url(self):        
         return reverse('test_completado', args=[self.object.id])
 

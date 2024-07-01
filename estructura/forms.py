@@ -1,30 +1,58 @@
 from django import forms
 from .models import Test, Regla, Cuestionario, Pregunta, Paciente, Doctor
+from django.db.models import Prefetch
 
 
 
 class TestForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        self._set_paciente_fields(user)
+        self._set_doctor_fields(user)
+        self._set_cuestionario_fields(user)
+
+    def _set_paciente_fields(self, user):
+        self.fields['paciente'].empty_label = "Seleccione un paciente"
+        self.fields['paciente'].queryset = Paciente.objects.filter(estado=True)
+
+    def _set_doctor_fields(self, user):
+        self.fields['doctor'].empty_label = "Seleccione un psicólogo"
+        doctors = self._get_doctors(user)
+        self.fields['doctor'].queryset = doctors.select_related('user')
+        self.fields['doctor'].initial = doctors.first()
+        self._set_doctor_readonly_attributes(user)
+
+    def _set_cuestionario_fields(self, user):
+        self.fields['cuestionario'].empty_label = "Seleccione un cuestionario"
+        self.fields['cuestionario'].queryset = self._get_cuestionarios(user)
+
+    def _get_doctors(self, user):
+        if user:
+            return Doctor.objects.filter(estado=True, user=user)
+        return Doctor.objects.filter(estado=True)
+
+    def _get_cuestionarios(self, user):
+        return Cuestionario.objects.select_related('trastorno').filter(trastorno__is_active=True)
+
+    def _set_doctor_readonly_attributes(self, user):
+        if user:
+            self.fields['doctor'].widget.attrs['disabled'] = True
+            self.fields['doctor'].widget.attrs['readonly'] = True
+
     class Meta:
         model = Test
         fields = [
-            'paciente',
             'doctor',
+            'paciente',
             'cuestionario',
         ]
         widgets = {
-            'paciente': forms.Select(attrs={'class': 'form-control selectpicker', 'data-live-search': 'true'}),
             'doctor': forms.Select(attrs={'class': 'form-control selectpicker', 'data-live-search': 'true'}),
+            'paciente': forms.Select(attrs={'class': 'form-control selectpicker', 'data-live-search': 'true'}),
             'cuestionario': forms.Select(attrs={'class': 'form-control selectpicker', 'data-live-search': 'true'}),
         }
-
-    def __init__(self, *args, **kwargs):
-        super(TestForm, self).__init__(*args, **kwargs)
-
-        self.fields['paciente'].empty_label = "Seleccione un Paciente"
-        self.fields['paciente'].queryset = Paciente.objects.filter(estado=True)
-        self.fields['doctor'].empty_label = "Seleccione un Psicólogo"
-        self.fields['doctor'].queryset = Doctor.objects.filter(estado=True)
-        self.fields['cuestionario'].empty_label = "Seleccione un Cuestionario"
 
 
 

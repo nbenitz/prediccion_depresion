@@ -40,7 +40,7 @@ urlpatterns = [
     path('doctor/detalle/<str:pk>', ObjetoDetalle.as_view(
         template_name="doctor/detalles.html",
         model=get_user_model(),
-        extra_context={'titulo': 'Doctor'}), name='detallesDoctor'
+        extra_context={'titulo': 'Psicólogo'}), name='detallesDoctor'
     ),
     path('doctor/crear', create_doctor, name='crearDoctor'),
     path('doctor/editar/<str:pk>', edit_doctor, name='actualizarDoctor'),

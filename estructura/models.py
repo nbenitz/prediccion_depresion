@@ -22,8 +22,7 @@ class Trastorno(models.Model):
 class Escala(models.Model):
     id = models.AutoField(primary_key=True)
     transtorno = models.ForeignKey(
-        Trastorno, models.DO_NOTHING, db_column="id_trastorno", verbose_name="Trastorno"
-    )
+        Trastorno, models.DO_NOTHING, db_column="id_trastorno")
     tipo = models.CharField(max_length=50, verbose_name="Tipo de Depresión", default="")
     descripcion = models.TextField(max_length=1024, verbose_name="Descripción")
     caracteristicas = models.TextField(max_length=1024, verbose_name="Características")

@@ -1,7 +1,25 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block head_title %}Cerrar Sesión{% endblock %}
+
 {% block content %}
-<p class='lead'>{% trans "Sesión terminada." %}</p>
-<p><a href="{% url 'login' %}">Login</a></p></p>
+
+<div class='row justify-content-center align-items-center' style="min-height: calc(100vh - 76px);">
+    <div class='card-container col-md-6 col-sm-offset-3'>
+        <div class="card shadow my-3">
+
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-align-center">Cerrar Sesión</h6>
+            </div>
+
+            <div class="card-body">
+                <p class='lead'>{% trans "Sesión terminada." %}</p>
+                <p><a href="{% url 'login' %}">Login</a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 {% endblock %}

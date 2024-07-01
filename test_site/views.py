@@ -1,12 +1,8 @@
 from django.conf import settings
 from django.core.mail import send_mail 
-
 from .forms import ContactForm
 from django.shortcuts import render
-from django.core import management
-from django.http.response import HttpResponse
 
-from django.views.generic import TemplateView
 
 
 def inicio(request):

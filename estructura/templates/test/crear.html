@@ -2,6 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block card %}
+<style>
+    .disabled {
+        cursor: default !important;
+    }
+
+	.disabled .filter-option-inner-inner {
+        color: #505050 !important; /* Cambia el color del texto a negro */
+    }
+</style>
 
 <form method="post" enctype="multipart/form-data">
 
@@ -10,7 +19,7 @@
 
 	<button type="submit" class="btn btn-primary">
 		<i class="fas fa-save"></i>
-		Continuar
+		Continuar jeje
 	</button>
 
 	<a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary">

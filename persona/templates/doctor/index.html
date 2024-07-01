@@ -6,8 +6,8 @@
 		<tr>
 			<th>CI</th>
 			<th>Nombre</th>
-			<th>Telefono</th>
-			<th>Direccion</th>
+			<th>Teléfono</th>
+			<th>Dirección</th>
 			<th>Estado</th>
 			<th style="text-align: center; width: 9%;">Acciones</th>
 		</tr>
@@ -18,7 +18,7 @@
 			<tr>
 				<td>{{ user.doctor.ci }}</td>
 				<td>{{ user.first_name }} {{user.last_name}}</td>
-				<td>{{ user.telefono }}</td>
+				<td>{{ user.telefono|default:"" }}</td>
 				<td>{{ user.direccion|default:"" }}</td>
 				<td>{{ user.doctor.estado|yesno:'Activo,Inactivo' }}</td>
 				<td style="text-align: center; width: 9%;">
