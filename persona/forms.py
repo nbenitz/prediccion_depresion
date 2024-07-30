@@ -10,6 +10,11 @@ class UserForm(ModelForm):
     class Meta:
         model = get_user_model()
         fields = ('username', 'email', 'first_name', 'last_name', 'telefono', 'direccion')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'required': True, 'class': 'required'}),
+            'last_name': forms.TextInput(attrs={'required': True, 'class': 'required'}),
+            'email': forms.EmailInput(attrs={'required': True, 'class': 'required'}),
+        }
         
 class DoctorForm(ModelForm):
     class Meta:

@@ -53,6 +53,15 @@ def inactivar_paciente(request, pk):
     paciente = Paciente.objects.get(id=pk)
     paciente.estado = False
     paciente.save()
+    messages.success(request, ('Paciente activado correctamente'))
+    return redirect('leerPaciente')
+
+
+def activar_paciente(request, pk):
+    paciente = Paciente.objects.get(id=pk)
+    paciente.estado = True
+    paciente.save()
+    messages.success(request, ('Paciente activado correctamente'))
     return redirect('leerPaciente')
 
 
@@ -115,6 +124,15 @@ def inactivar_doctor(request, pk):
     doctor = Doctor.objects.get(id=pk)
     doctor.estado = False
     doctor.save()
+    messages.success(request, ('Psicólogo inactivado correctamente'))
+    return redirect('leerDoctor')
+
+
+def activar_doctor(request, pk):
+    doctor = Doctor.objects.get(id=pk)
+    doctor.estado = True
+    doctor.save()
+    messages.success(request, ('Psicólogo activado correctamente'))
     return redirect('leerDoctor')
 
 

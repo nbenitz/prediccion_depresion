@@ -20,4 +20,19 @@
 		
 	</form>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var requiredFields = document.querySelectorAll('.required');
+			requiredFields.forEach(function(field) {
+				var label = document.querySelector('label[for="' + field.id + '"]');
+				if (label) {
+					var asterisk = document.createElement('span');
+					asterisk.innerHTML = '*';
+					asterisk.classList.add('asteriskField');
+					label.appendChild(asterisk);
+				}
+			});
+		});
+	</script>
+	
 {% endblock %}

@@ -45,7 +45,7 @@ class Paciente(models.Model):
 class Doctor(models.Model):
     user = models.OneToOneField(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
         null=True,
         related_name='doctor'
     )

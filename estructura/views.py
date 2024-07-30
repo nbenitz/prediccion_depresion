@@ -1,6 +1,6 @@
 # from django.shortcuts import render
-
-from django.views.generic import ListView, DetailView, TemplateView
+from django.http import HttpResponseRedirect
+from django.views.generic import ListView, DetailView, TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .models import Trastorno, Escala, Pregunta, Cuestionario, Test, Resultado, Regla
 from django.urls import reverse
@@ -43,16 +43,27 @@ class TrastornoActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):               
         return reverse('leerTrastorno') 
 
-   
-class TrastornoEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView): 
-    model = Trastorno 
-    form = Trastorno
-    fields = "__all__"     
- 
-    def get_success_url(self): 
-        success_message = 'Trastorno Eliminado Correctamente!' 
-        messages.success (self.request, (success_message))       
-        return reverse('leerTrastorno') 
+
+    
+class TrastornoInactivar(LoginRequiredMixin, SuccessMessageMixin, View):
+    def post(self, request, pk):
+        trastorno = get_object_or_404(Trastorno, pk=pk)
+        trastorno.is_active = False
+        trastorno.save()
+        success_message = 'Trastorno Inactivado Correctamente!'
+        messages.success(request, success_message)
+        return HttpResponseRedirect(reverse('leerTrastorno'))
+    
+
+
+class TrastornoActivar(LoginRequiredMixin, SuccessMessageMixin, View):
+    def post(self, request, pk):
+        trastorno = get_object_or_404(Trastorno, pk=pk)
+        trastorno.is_active = True
+        trastorno.save()
+        success_message = 'Trastorno Activado Correctamente!'
+        messages.success(request, success_message)
+        return HttpResponseRedirect(reverse('leerTrastorno'))
 
 
 #=================================== TipoDepresion ===========================================    
@@ -100,15 +111,25 @@ class TipoDepresionActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateVie
         return reverse('leerTipoDepresion')  
 
    
-class TipoDepresionEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView): 
-    model = Escala 
-    form = Escala
-    fields = "__all__"     
- 
-    def get_success_url(self): 
-        success_message = 'Tipo de Depresión Eliminado Correctamente!' 
-        messages.success (self.request, (success_message))       
-        return reverse('leerTipoDepresion')
+class TipoDepresionInactivar(LoginRequiredMixin, SuccessMessageMixin, View):
+    def post(self, request, pk):
+        escala = get_object_or_404(Escala, pk=pk)
+        escala.is_active = False
+        escala.save()
+        success_message = 'Tipo de Depresión Inactivado Correctamente!'
+        messages.success(request, success_message)
+        return HttpResponseRedirect(reverse('leerTipoDepresion'))
+    
+
+
+class TipoDepresionActivar(LoginRequiredMixin, SuccessMessageMixin, View):
+    def post(self, request, pk):
+        escala = get_object_or_404(Escala, pk=pk)
+        escala.is_active = True
+        escala.save()
+        success_message = 'Tipo de Depresión Activado Correctamente!'
+        messages.success(request, success_message)
+        return HttpResponseRedirect(reverse('leerTipoDepresion'))
 
 
 #=================================== Pregunta ============================================
@@ -144,14 +165,19 @@ class PreguntaEliminar(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
 
 # ========================== Test ===================================================================
-class CuestionarioCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView): 
-    model = Cuestionario 
-    form = Cuestionario  
-    fields = "__all__" 
-    success_message = 'Cuestionario Creado Correctamente!' 
- 
-    def get_success_url(self):        
-        return reverse('leerTrastorno')
+class CuestionarioCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Cuestionario
+    form = Cuestionario
+    fields = "__all__"
+    success_message = 'Cuestionario Creado Correctamente!'
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['trastorno'].queryset = Trastorno.objects.filter(is_active=True)
+        return form
+
+    def get_success_url(self):
+        return reverse('leerCuestionario')
 
 
 class CuestionarioActualizar(LoginRequiredMixin, SuccessMessageMixin, UpdateView): 

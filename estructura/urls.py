@@ -2,13 +2,26 @@
 from django.urls import path
 
 from estructura import models
-from .views import TipoDepresionCrear, TipoDepresionActualizar, TipoDepresionEliminar
-from .views import PreguntaCrear, PreguntaActualizar, PreguntaEliminar
-from .views import ObjetoListado, ObjetoDetalle
-from .views import TrastornoCrear, TrastornoActualizar, TrastornoEliminar
-from .views import CuestionarioCrear, CuestionarioActualizar, CuestionarioEliminar
-from .views import ReglaCrear, ReglaActualizar, ReglaEliminar
 from .views import (
+    PreguntaCrear,
+    PreguntaActualizar,
+    PreguntaEliminar,
+    ObjetoListado,
+    ObjetoDetalle,
+    TrastornoCrear,
+    TrastornoActualizar,
+    TrastornoInactivar,
+    TrastornoActivar,
+    TipoDepresionCrear,
+    TipoDepresionActualizar,
+    TipoDepresionInactivar,
+    TipoDepresionActivar,
+    CuestionarioCrear,
+    CuestionarioActualizar,
+    CuestionarioEliminar,
+    ReglaCrear,
+    ReglaActualizar,
+    ReglaEliminar,
     TestListar,
     TestCrear,
     TipoDepresionListar,
@@ -56,8 +69,13 @@ urlpatterns = [
     ),
     path(
         "trastorno/eliminar/<str:pk>",
-        TrastornoEliminar.as_view(),
+        TrastornoInactivar.as_view(),
         name="eliminarTrastorno",
+    ),
+    path(
+        "trastorno/activar/<str:pk>",
+        TrastornoActivar.as_view(),
+        name="activarTrastorno",
     ),
     # url de Tipo de Depresión
     path(
@@ -97,8 +115,13 @@ urlpatterns = [
     ),
     path(
         "escala/eliminar/<str:pk>",
-        TipoDepresionEliminar.as_view(),
+        TipoDepresionInactivar.as_view(),
         name="eliminarTipoDepresion",
+    ),
+    path(
+        "escala/activar/<str:pk>",
+        TipoDepresionActivar.as_view(),
+        name="activarTipoDepresion",
     ),
 
     # --------------------- url de categoria pregunta ------------------------------------------
