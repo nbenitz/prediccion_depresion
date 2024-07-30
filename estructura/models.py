@@ -21,8 +21,7 @@ class Trastorno(models.Model):
 
 class Escala(models.Model):
     id = models.AutoField(primary_key=True)
-    transtorno = models.ForeignKey(
-        Trastorno, models.DO_NOTHING, db_column="id_trastorno")
+    transtorno = models.ForeignKey(Trastorno, models.RESTRICT, db_column="id_trastorno")
     tipo = models.CharField(max_length=50, verbose_name="Tipo de Depresión", default="")
     descripcion = models.TextField(max_length=1024, verbose_name="Descripción")
     caracteristicas = models.TextField(max_length=1024, verbose_name="Características")
@@ -55,7 +54,7 @@ class Cuestionario(models.Model):
     nombre = models.CharField(
         max_length=50, verbose_name="Nombre del Cuestionario", default=""
     )
-    trastorno = models.ForeignKey(Trastorno, on_delete=models.CASCADE)
+    trastorno = models.ForeignKey(Trastorno, on_delete=models.RESTRICT)
     preguntas = models.ManyToManyField(Pregunta)
 
     class Meta:
@@ -69,7 +68,7 @@ class Regla(models.Model):
     # nombre = models.CharField(max_length=50, verbose_name="Nombre de la regla", default='')
     cuestionario = models.ForeignKey(
         Cuestionario,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
         related_name="reglas",
         verbose_name="Cuestionario",
     )
@@ -78,7 +77,7 @@ class Regla(models.Model):
     )
     escala = models.ForeignKey(
         Escala,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
         related_name="reglas",
         verbose_name="Diagnóstico",
     )
@@ -91,9 +90,9 @@ class Regla(models.Model):
 
 
 class Test(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, verbose_name='Psicólogo')
-    cuestionario = models.ForeignKey(Cuestionario, on_delete=models.CASCADE)
+    paciente = models.ForeignKey(Paciente, on_delete=models.RESTRICT)
+    doctor = models.ForeignKey(Doctor, on_delete=models.RESTRICT, verbose_name='Psicólogo')
+    cuestionario = models.ForeignKey(Cuestionario, on_delete=models.RESTRICT)
     fecha = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -104,8 +103,8 @@ class Test(models.Model):
 
 
 class Resultado(models.Model):
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="resultado")
-    pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.RESTRICT, related_name="resultado")
+    pregunta = models.ForeignKey(Pregunta, on_delete=models.RESTRICT)
     respuesta = models.BooleanField()
 
     class Meta:

@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from persona.views import ObjetoListado, ObjetoDetalle, activation_sent_view, activate, activation_complete_view
 
-from persona.views import PacienteCrear, PacienteActualizar, inactivar_paciente, create_doctor, edit_doctor, inactivar_doctor
+from persona.views import PacienteCrear, PacienteActualizar, inactivar_paciente, create_doctor, edit_doctor, inactivar_doctor, activar_doctor, activar_paciente
 from persona import models
 
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
         extra_context={'titulo':'Editar Paciente'}), name='actualizarPaciente'
     ),
     path('paciente/inactivar/<str:pk>', inactivar_paciente, name='eliminarPaciente'),
+    path('paciente/activar/<str:pk>', activar_paciente, name='activarPaciente'),
     path('doctor/', ObjetoListado.as_view(
         template_name="doctor/index.html",
         model=get_user_model(),
@@ -45,6 +46,7 @@ urlpatterns = [
     path('doctor/crear', create_doctor, name='crearDoctor'),
     path('doctor/editar/<str:pk>', edit_doctor, name='actualizarDoctor'),
     path('doctor/inactivar/<str:pk>', inactivar_doctor, name='eliminarDoctor'),
+    path('doctor/activar/<str:pk>', activar_doctor, name='activarDoctor'),
     path('signup/', create_doctor, name="signup"),
     path('sent/', activation_sent_view, name="activation_send"),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),

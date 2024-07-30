@@ -1,6 +1,5 @@
 from django import forms
-from .models import Test, Regla, Cuestionario, Pregunta, Paciente, Doctor
-from django.db.models import Prefetch
+from .models import Test, Regla, Cuestionario, Pregunta, Paciente, Doctor, Escala
 
 
 
@@ -69,7 +68,9 @@ class ReglaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cuestionario'].empty_label = "Seleccione el Cuestionario"
+        self.fields['cuestionario'].queryset = Cuestionario.objects.select_related('trastorno').filter(trastorno__is_active=True)
         self.fields['escala'].empty_label = "Seleccione el Diagnóstico"
+        self.fields['escala'].queryset = Escala.objects.filter(is_active=True)
         
         
         # Filtrar las respuestas necesarias basadas en el cuestionario seleccionado

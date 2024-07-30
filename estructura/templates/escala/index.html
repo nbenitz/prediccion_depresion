@@ -65,12 +65,12 @@
 
 					<aside class="col-md-3">
 						<div class="info-aside">
-							<form method="POST" action="eliminar/{{object.id}}">
+							<form method="POST" {% if object.is_active %}action="eliminar/{{object.id}}"{% else %}action="activar/{{object.id}}" {% endif %}>
 								{% csrf_token %}
 								<a href="editar/{{object.id}}" title="Editar" class="btn btn-primary btn-block">
 									<i class="far fa-edit"></i>&nbsp;Editar</a>
-								<button class="btn btn-danger btn-block" onclick="return eliminar();" title="Eliminar">
-									<i class="far fa-trash-alt"></i>&nbsp;Eliminar</button>
+									<button {% if object.is_active %}class="btn btn-danger btn-block" onclick="return eliminar();" title="Inactivar"{% else %}class="btn btn-success btn-block" onclick="return activar();" title="Activar"{% endif %}>
+										{% if object.is_active %}<i class="far fa-trash-alt"></i>&nbsp;Inactivar{% else %}<i class="far fa-check-circle"></i>&nbsp;Activar{% endif %}</button>
 							</form>
 						</div>
 					</aside>
@@ -93,7 +93,14 @@
 
 <script type="text/javascript">
 	function eliminar() {
-		var x = confirm("Eliminar Habitaci&oacute;n?");
+		var x = confirm("Eliminar Tipo de Depresión?");
+		if (x)
+			return true;
+		else
+			return false;
+	}
+	function activar() {
+		var x = confirm("Activar Tipo de Depresión?");
 		if (x)
 			return true;
 		else

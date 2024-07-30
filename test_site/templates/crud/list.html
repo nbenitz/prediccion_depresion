@@ -5,14 +5,12 @@
 {% block content %}
 
 {% if messages %}
-<ul class="messages m-1 list-group">
-	{% for message in messages %}
-	<li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary" {% endif %}>{{ message
-		}}</li>
+	<ul class="messages m-1 list-group">
+		{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
 		{% endfor %}
-</ul>
+	</ul>
 {% endif %}
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-3">
