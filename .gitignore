@@ -1,5 +1,5 @@
 env/
-
+.vscode/
 estructura/migrations/
 persona/migrations/
 

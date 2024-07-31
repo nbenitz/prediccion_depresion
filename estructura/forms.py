@@ -37,8 +37,9 @@ class TestForm(forms.ModelForm):
 
     def _set_doctor_readonly_attributes(self, user):
         if user:
-            self.fields['doctor'].widget.attrs['disabled'] = True
-            self.fields['doctor'].widget.attrs['readonly'] = True
+            self.fields['doctor'].widget.attrs['disabled'] = 'disabled'
+            self.fields['doctor'].widget.attrs['readonly'] = 'readonly'
+            self.fields['doctor'].widget.attrs['class'] = 'doctor-field-disabled'
 
     class Meta:
         model = Test

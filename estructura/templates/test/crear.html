@@ -19,7 +19,7 @@
 
 	<button type="submit" class="btn btn-primary">
 		<i class="fas fa-save"></i>
-		Continuar jeje
+		Continuar
 	</button>
 
 	<a href="{{request.META.HTTP_REFERER}}" type="submit" class="btn btn-primary">
@@ -28,5 +28,19 @@
 	</a>
 
 </form>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.querySelector('form');
+		const doctorField = document.querySelector('.doctor-field-disabled');
+
+		form.addEventListener('submit', function () {
+			if (doctorField) {
+				doctorField.disabled = false;
+				doctorField.readOnly = false;
+			}
+		});
+	});
+</script>
 
 {% endblock %}

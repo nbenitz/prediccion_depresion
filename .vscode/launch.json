@@ -1,5 +1,0 @@
-{
-    "python.pythonPath": "/home/desarrollo/examples/prediccion_depresion/env/bin/python",
-    "python.venvPath": "/home/desarrollo/examples/prediccion_depresion/env",
-    "python.autoComplete.extraPaths": ["./home/desarrollo/examples/prediccion_depresion"],
-}
