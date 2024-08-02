@@ -1,7 +1,6 @@
 import json
+import io
 from django.shortcuts import render
-
-
 from collections import defaultdict
 from django.core import management
 from django.views.generic import View, ListView
@@ -245,15 +244,36 @@ def ver_opcion_mantenimiento(request):
     return render(request, "mantenimiento/backup_restore.html")
 
 def backup(request):
-    management.call_command('dumpdata', 'persona', output='persona/fixtures/db.json', format='json')
-    management.call_command('dumpdata', 'estructura', output='estructura/fixtures/db.json', format='json')
-    return render(request, "mantenimiento/backup.html")
+    try:
+        # Dump data to a string
+        persona_data = io.StringIO()
+        estructura_data = io.StringIO()
+        management.call_command('dumpdata', 'persona', format='json', stdout=persona_data)
+        management.call_command('dumpdata', 'estructura', format='json', stdout=estructura_data)
 
+        # Save the string to a file with UTF-8 encoding
+        with open('persona/fixtures/db.json', 'w', encoding='utf-8') as f:
+            f.write(persona_data.getvalue())
+
+        with open('estructura/fixtures/db.json', 'w', encoding='utf-8') as f:
+            f.write(estructura_data.getvalue())
+
+        # Verify encoding
+        with open('persona/fixtures/db.json', 'r', encoding='utf-8') as f:
+            f.read()
+        with open('estructura/fixtures/db.json', 'r', encoding='utf-8') as f:
+            f.read()
+
+        return render(request, "mantenimiento/backup.html")
+    except Exception as e:
+        return HttpResponse(f"Error al crear el backup: {e}", status=500)
+    
+    
 def verify_json(filepath):
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             json.load(f)
-        return True
+        return True, None
     except UnicodeDecodeError as e:
         return False, f"Error de codificación: {e}"
     except json.JSONDecodeError as e:
