@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 
 
@@ -248,8 +249,33 @@ def backup(request):
     management.call_command('dumpdata', 'estructura', output='estructura/fixtures/db.json', format='json')
     return render(request, "mantenimiento/backup.html")
 
+def verify_json(filepath):
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            json.load(f)
+        return True
+    except UnicodeDecodeError as e:
+        return False, f"Error de codificación: {e}"
+    except json.JSONDecodeError as e:
+        return False, f"Error de JSON: {e}"
+    except Exception as e:
+        return False, f"Error inesperado: {e}"
+
 def restore(request):
-    management.call_command('loaddata', 'db.json', format='json', app_label='persona')
-    management.call_command('loaddata', 'db.json', format='json', app_label='estructura')
-    return render(request, "mantenimiento/restore.html")
+    persona_valid, persona_error = verify_json('persona/fixtures/db.json')
+    estructura_valid, estructura_error = verify_json('estructura/fixtures/db.json')
+
+    if not persona_valid:
+        return HttpResponse(persona_error, status=500)
+    if not estructura_valid:
+        return HttpResponse(estructura_error, status=500)
+
+    try:
+        management.call_command('loaddata', 'persona/fixtures/db.json', format='json')
+        management.call_command('loaddata', 'estructura/fixtures/db.json', format='json')
+        return render(request, "mantenimiento/restore.html")
+    except UnicodeDecodeError as e:
+        return HttpResponse(f"Error de codificación: {e}", status=500)
+    except Exception as e:
+        return HttpResponse(f"Error inesperado: {e}", status=500)
 
