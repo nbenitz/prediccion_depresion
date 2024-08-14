@@ -5,14 +5,14 @@ from persona.models import Paciente, Doctor
 
 class Trastorno(models.Model):
     nombre = models.CharField(
-        max_length=50, verbose_name="Nombre del trastorno", default=""
+        max_length=50, verbose_name="Nombre del tipo de test", default=""
     )
     descripcion = models.TextField(max_length=1024, verbose_name="Descripción")
     is_active = models.BooleanField(default=True, verbose_name="Activo")
 
     class Meta:
         ordering = ["nombre"]
-        verbose_name_plural = "Trastornos"
+        verbose_name_plural = "Tipos de Test"
         db_table = "trastorno"
 
     def __str__(self):

@@ -3,7 +3,7 @@
 {% block card %}
 <!-- <p><strong>ID: </strong>{{object.id}}</p> -->
 <p><strong>Nombre del Cuestionario: </strong>{{object.nombre}}</p>
-<p><strong>Trastorno: </strong>{{object.trastorno}}</p>
+<p><strong>Tipo de Test: </strong>{{object.trastorno}}</p>
 <p><strong>Preguntas: </strong>
 	<ul>
 	  {% for pregunta in object.preguntas.all %}

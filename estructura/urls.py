@@ -38,7 +38,7 @@ urlpatterns = [
         ObjetoListado.as_view(
             model=models.Trastorno,
             template_name="trastorno/index.html",
-            extra_context={"titulo": "Trastorno", "plural": "Trastornos"},
+            extra_context={"titulo": "Tipo de Test", "plural": "Tipos de Test"},
         ),
         name="leerTrastorno",
     ),
@@ -47,7 +47,7 @@ urlpatterns = [
         ObjetoDetalle.as_view(
             model=models.Trastorno,
             template_name="trastorno/detalles.html",
-            extra_context={"titulo": "Detalles del Trastorno"},
+            extra_context={"titulo": "Detalles del Tipo de Test"},
         ),
         name="detallesTrastorno",
     ),
@@ -55,7 +55,7 @@ urlpatterns = [
         "trastorno/crear",
         TrastornoCrear.as_view(
             template_name="crud/crear_editar.html",
-            extra_context={"titulo": "Crear Trastorno"},
+            extra_context={"titulo": "Crear Tipo de Test"},
         ),
         name="CrearTrastorno",
     ),
@@ -63,7 +63,7 @@ urlpatterns = [
         "trastorno/editar/<str:pk>",
         TrastornoActualizar.as_view(
             template_name="crud/crear_editar.html",
-            extra_context={"titulo": "Editar Trastorno"},
+            extra_context={"titulo": "Editar Tipo de Test"},
         ),
         name="actualizarTrastorno",
     ),

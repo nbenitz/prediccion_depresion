@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block head_title %}Trastornos{% endblock %}
+{% block head_title %}Tipos de Test{% endblock %}
 
 
 {% block in_head %}
@@ -22,11 +22,11 @@
 <!-- Page Heading -->
 <div class='row mx-2 mt-3'>
 	<div class='col-sm-6 col-sm-offset-3'>
-		<h1 class="h3 mb-2 text-gray-800">Trastornos</h1>
+		<h1 class="h3 mb-2 text-gray-800">Tipos de Test</h1>
 	</div>
 	<div align="right" class='col-sm-6 btn_crear mb-3'>
 		<a href="crear" class="btn btn-primary">
-			<i class="fas fa-plus"></i> Nuevo Trastorno</a>
+			<i class="fas fa-plus"></i> Nuevo Tipo de Test</a>
 	</div>
 </div>
 
@@ -69,14 +69,14 @@
 
 <script type="text/javascript">
 	function eliminar() {
-		var x = confirm("Inactivar Trastorno?");
+		var x = confirm("Inactivar Tipo de Test?");
 		if (x)
 			return true;
 		else
 			return false;
 	}
 	function activar() {
-		var x = confirm("Activar Trastorno?");
+		var x = confirm("Activar Tipo de Test?");
 		if (x)
 			return true;
 		else
